@@ -1,7 +1,43 @@
 ﻿@page "/search"
+@using Stocks.Shared.Models
+@inject HttpClient _httpClient
+@inject NavigationManager _navigation
 
 <h3>Search</h3>
 
-@code {
+@if (Tickers == null)
+{
 
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ticker</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ticker in Tickers.Reverse())
+            {
+                <tr @onclick="() => GoToTicker(ticker.Name)">
+                    <td>@ticker.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    public Stocks.Shared.Models.Ticker[] Tickers { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        Tickers = await _httpClient.GetFromJsonAsync<Stocks.Shared.Models.Ticker[]>("/api/ticker");
+    }
+
+    private void GoToTicker(string ticker)
+    {
+        _navigation.NavigateTo($"ticker/{ticker}", true);
+    }
 }

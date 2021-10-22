@@ -31,6 +31,11 @@ namespace Stocks.Server.Services
             return _dbContext.Users.Where(u => u.Username == user.Username && u.Password == user.Password).FirstOrDefaultAsync();
         }
 
+        public Task<Ticker[]> GetTickers()
+        {
+            return Task.FromResult(_dbContext.Tickers.ToArray());
+        }
+
         public Task<User> GetUserById(int userID)
         {
             return _dbContext.Users.Where(u => u.UserId == userID).FirstOrDefaultAsync();

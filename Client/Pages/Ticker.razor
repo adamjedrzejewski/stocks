@@ -1,0 +1,10 @@
+﻿@page "/ticker/{tickerName}"
+
+<h3>Ticker</h3>
+
+@TickerName
+
+@code {
+    [Parameter]
+    public string TickerName { get; set; }
+}

@@ -11,5 +11,6 @@ namespace Stocks.Server.Services
         public Task<User> GetLoggedInUserAsync(User user);
         public Task<User> GetUserById(int userID);
         public Task AddUser(User user);
+        public Task<Ticker[]> GetTickers();
     }
 }
