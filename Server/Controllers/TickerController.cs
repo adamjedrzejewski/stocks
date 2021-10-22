@@ -14,16 +14,18 @@ namespace Stocks.Server.Controllers
     public class TickerController : ControllerBase
     {
         private readonly IDatabaseService _databaseService;
+        private readonly ITickerService _tickerService;
 
-        public TickerController(IDatabaseService databaseService)
+        public TickerController(IDatabaseService databaseService, ITickerService tickerService)
         {
             this._databaseService = databaseService;
+            this._tickerService = tickerService;
         }
 
-        [HttpGet("{tickerName}")]
-        public async Task<IActionResult> GetTickerAsync(string tickername)
+        [HttpGet("{tickerName}/daily/adjusted")]
+        public async Task<ActionResult<TickerInfo>> GetTickerDailyAdjustedAsync(string tickername)
         {
-            return Ok();
+            return await _tickerService.GetTickerDailyAdjustedAsync(tickername);
         }
 
 

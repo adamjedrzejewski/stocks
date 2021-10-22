@@ -30,6 +30,8 @@ namespace Stocks.Server
                 options.UseSqlServer(Configuration.GetConnectionString("default"));
             });
             services.AddTransient<IDatabaseService, SqlServerDatabaseService>();
+            services.AddTransient<ITickerService, AlphaVantageTickerService>();
+            services.AddHttpClient();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

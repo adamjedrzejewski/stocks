@@ -13,8 +13,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        string QUERY_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=IBM&apikey=demo";
-        var tickerInfo = await _httpClient.GetFromJsonAsync<TickerInfo>(QUERY_URL);
+        var tickerInfo = await _httpClient.GetFromJsonAsync<TickerInfo>($"/api/ticker/{TickerName}/daily/adjusted");
         TickerTimeSeries = tickerInfo.TimeSeries.Select(k => (k.Key, k.Value)).OrderBy(k => k.Key).ToList();
         UpdateChart();
     }
