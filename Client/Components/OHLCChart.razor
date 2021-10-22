@@ -1,54 +1,11 @@
-﻿@page "/ticker/{tickerName}"
-@inject HttpClient _httpClient
-@using Stocks.Shared.Models
+﻿@using Stocks.Shared.Models
+<h1>Test Component</h1>
 
-<Stocks.Client.Components.OHLCChart TickerTimeSeries="TickerTimeSeries"/>
-<h3>Ticker: @TickerName</h3>
-
+<PlotlyChart Id="OHLCChart" Config="config" Layout="layout" Data="data" @ref="chart" />
 
 @code {
     [Parameter]
-    public string TickerName { get; set; }
-
     public List<(DateTime date, TickerDataPoint point)> TickerTimeSeries { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        var tickerInfo = await _httpClient.GetFromJsonAsync<TickerInfo>($"/api/ticker/{TickerName}/daily/adjusted");
-        TickerTimeSeries = tickerInfo.TimeSeries.Select(k => (k.Key, k.Value)).OrderBy(k => k.Key).ToList();
-        //UpdateChart();
-    }
-
-@*    private void UpdateChart()
-    {
-        var dates = TickerTimeSeries.Select(k => k.date).ToList();
-        var open = TickerTimeSeries.Select(k => k.point.Open).Cast<object>().ToList();
-        var close = TickerTimeSeries.Select(k => k.point.Close).Cast<object>().ToList();
-        var high = TickerTimeSeries.Select(k => k.point.High).Cast<object>().ToList();
-        var low = TickerTimeSeries.Select(k => k.point.Low).Cast<object>().ToList();
-        var x = dates.Select(v => v).Cast<object>().ToList();
-        if (x.Count == 0)
-        {
-            dates.Add(new DateTime(2000, 1, 1));
-        }
-        if (chart.Data.FirstOrDefault() is not Ohlc ohlc) return;
-        var xaxis = chart.Layout.XAxis.FirstOrDefault();
-        var start_date = dates.Min().ToString();
-        var end_date = dates.Max().ToString();
-        xaxis.Range = new List<object> { start_date, end_date };
-        xaxis.RangeSlider = new Plotly.Blazor.LayoutLib.XAxisLib.RangeSlider
-        {
-            Range = xaxis.Range
-        };
-
-        ohlc.Open = open;
-        ohlc.Close = close;
-        ohlc.High = high;
-        ohlc.Low = low;
-        ohlc.X = x;
-        chart.React();
-    }
-
     List<ITrace> data = new List<ITrace>
     {
         new Ohlc
@@ -124,5 +81,40 @@
                 Type = Plotly.Blazor.LayoutLib.YAxisLib.TypeEnum.Linear
             }
         }
-    };*@
+    };
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (TickerTimeSeries == null)
+        {
+            return;
+        }
+
+        var dates = TickerTimeSeries.Select(k => k.date).ToList();
+        var open = TickerTimeSeries.Select(k => k.point.Open).Cast<object>().ToList();
+        var close = TickerTimeSeries.Select(k => k.point.Close).Cast<object>().ToList();
+        var high = TickerTimeSeries.Select(k => k.point.High).Cast<object>().ToList();
+        var low = TickerTimeSeries.Select(k => k.point.Low).Cast<object>().ToList();
+        var x = dates.Select(v => v).Cast<object>().ToList();
+        if (x.Count == 0)
+        {
+            dates.Add(new DateTime(2000, 1, 1));
+        }
+        if (chart.Data.FirstOrDefault() is not Ohlc ohlc) return;
+        var xaxis = chart.Layout.XAxis.FirstOrDefault();
+        var start_date = dates.Min().ToString();
+        var end_date = dates.Max().ToString();
+        xaxis.Range = new List<object> { start_date, end_date };
+        xaxis.RangeSlider = new Plotly.Blazor.LayoutLib.XAxisLib.RangeSlider
+        {
+            Range = xaxis.Range
+        };
+
+        ohlc.Open = open;
+        ohlc.Close = close;
+        ohlc.High = high;
+        ohlc.Low = low;
+        ohlc.X = x;
+        await chart.React();
+    }
 }
