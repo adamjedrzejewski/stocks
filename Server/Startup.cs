@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Stocks.Server.Models;
+using Stocks.Server.Services;
 using System.Linq;
 
 namespace Stocks.Server
@@ -28,14 +29,16 @@ namespace Stocks.Server
             services.AddDbContext<MainDbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("default"));
             });
+            services.AddTransient<IDatabaseService, SqlServerDatabaseService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddCors();
 
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            });
+            }).AddCookie();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

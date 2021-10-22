@@ -1,0 +1,29 @@
+﻿@using Stocks.Shared.Models
+@page "/login"
+@inject HttpClient httpClient
+@inject NavigationManager navigation
+@inject ILoginViewModel loginViewModel
+
+<h3>Login</h3>
+<hr />
+
+<div class="col-6">
+    <input type="text" class="form-control" placeholder="username" @bind="loginViewModel.Username"/>
+</div>
+<br />
+<div class="col-6">
+    <input type="password" class="form-control" placeholder="password" @bind="loginViewModel.Password"/>
+</div>
+<br />
+<div class="col-6">
+    <button class="btn btn-primary" @onclick="LoginUser">Login</button>
+</div>
+
+
+@code {
+    private async Task LoginUser()
+    {
+        await loginViewModel.LoginUserAsync();
+        navigation.NavigateTo("/", true);
+    }
+}

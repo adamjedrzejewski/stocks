@@ -1,17 +1,43 @@
 ﻿@inherits LayoutComponentBase
+@inject HttpClient httpclient
+@inject NavigationManager navigation
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
+    <AuthorizeView>
+        <Authorized>
+            <div class="sidebar">
+                <NavMenu />
+            </div>
+        </Authorized>
+    </AuthorizeView>
     <div class="main">
         <div class="top-row px-4">
-            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+            <AuthorizeView>
+                <Authorized>
+                    <span class="ml-md-auto">
+                        Logged in as <b>@context.User.Identity.Name</b>
+                        <button class="btn btn-danger" @onclick="LogoutUser">Logout</button>
+                    </span>
+                </Authorized>
+                <NotAuthorized>
+                    <span class="ml-md-auto">
+                        <b>
+                            Not Logged in
+                        </b>
+                    </span>
+                </NotAuthorized>
+            </AuthorizeView>
         </div>
-
         <div class="content px-4">
             @Body
         </div>
     </div>
 </div>
+
+@code {
+    private async Task LogoutUser()
+    {
+        await httpclient.GetAsync("/api/user/logout");
+        navigation.NavigateTo("/", true);
+    }
+}
