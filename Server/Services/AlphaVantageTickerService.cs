@@ -1,4 +1,5 @@
-﻿using Stocks.Shared.Models;
+﻿using Stocks.Server.Models;
+using Stocks.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,40 +18,40 @@ namespace Stocks.Server.Services
             this._httpClient = httpClient;
         }
 
-        public Task<TickerInfo> GetTickerDailyAdjustedAsync(string tickername)
+        public async Task<TickerInfo> GetTickerDailyAdjustedAsync(string tickername)
         {
-            return GetTickerTimeSeries("TIME_SERIES_DAILY_ADJUSTED", tickername);
+            return await GetTickerTimeSeries<TickerInfoDaily>("TIME_SERIES_DAILY_ADJUSTED", tickername);
         }
 
-        public Task<TickerInfo> GetTickerDailyAsync(string tickername)
+        public async Task<TickerInfo> GetTickerDailyAsync(string tickername)
         {
-            return GetTickerTimeSeries("TIME_SERIES_DAILY", tickername);
+            return await GetTickerTimeSeries<TickerInfoDaily>("TIME_SERIES_DAILY", tickername);
         }
 
-        public Task<TickerInfo> GetTickerMonthlyAdjustedAsync(string tickername)
+        public async Task<TickerInfo> GetTickerMonthlyAdjustedAsync(string tickername)
         {
-            return GetTickerTimeSeries("TIME_SERIES_MONTHLY_ADJUSTED", tickername);
+            return await GetTickerTimeSeries<TickerInfoMonthlyAdjusted>("TIME_SERIES_MONTHLY_ADJUSTED", tickername);
         }
 
-        public Task<TickerInfo> GetTickerMonthlyAsync(string tickername)
+        public async Task<TickerInfo> GetTickerMonthlyAsync(string tickername)
         {
-            return GetTickerTimeSeries("TIME_SERIES_MONTHLY", tickername);
+            return await GetTickerTimeSeries<TickerInfoMonthly>("TIME_SERIES_MONTHLY", tickername);
         }
 
-        public Task<TickerInfo> GetTickerWeeklyAdjustedAsync(string tickername)
+        public async Task<TickerInfo> GetTickerWeeklyAdjustedAsync(string tickername)
         {
-            return GetTickerTimeSeries("TIME_SERIES_WEEKLY_ADJUSTED", tickername);
+            return await GetTickerTimeSeries<TickerInfoWeeklyAdjusted>("TIME_SERIES_WEEKLY_ADJUSTED", tickername);
         }
 
-        public Task<TickerInfo> GetTickerWeeklyAsync(string tickername)
+        public async Task<TickerInfo> GetTickerWeeklyAsync(string tickername)
         {
-            return GetTickerTimeSeries("TIME_SERIES_WEEKLY", tickername);
+            return await GetTickerTimeSeries<TickerInfoWeekly>("TIME_SERIES_WEEKLY", tickername);
         }
 
-        private async Task<TickerInfo> GetTickerTimeSeries(string series, string tickername)
+        private async Task<T> GetTickerTimeSeries<T>(string series, string tickername)
         {
             string QUERY_URL = $"https://www.alphavantage.co/query?function={series}&symbol=IBM&apikey=demo";
-            var tickerInfo = await _httpClient.GetFromJsonAsync<TickerInfo>(QUERY_URL);
+            var tickerInfo = await _httpClient.GetFromJsonAsync<T>(QUERY_URL);
             return tickerInfo;
         }
     }

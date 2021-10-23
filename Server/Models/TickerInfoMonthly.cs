@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 
 namespace Stocks.Shared.Models
 {
-    public class TickerInfo
+    class TickerInfoMonthly
     {
-
-        [JsonPropertyName("Time Series")]
+        [JsonPropertyName("Monthly Time Series")]
         public Dictionary<DateTime, TickerDataPoint> TimeSeries { get; set; }
 
+        public static implicit operator TickerInfo(TickerInfoMonthly tickerInfoWeekly)
+            => new TickerInfo
+            {
+                TimeSeries = tickerInfoWeekly.TimeSeries
+            };
     }
 }

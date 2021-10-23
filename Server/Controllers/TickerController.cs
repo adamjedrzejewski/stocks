@@ -46,13 +46,13 @@ namespace Stocks.Server.Controllers
             return await _tickerService.GetTickerWeeklyAsync(tickername);
         }
 
-        [HttpGet("{tickerName}/montly/adjusted")]
+        [HttpGet("{tickerName}/monthly/adjusted")]
         public async Task<ActionResult<TickerInfo>> GetTickerMonthlyAdjustedAsync(string tickername)
         {
             return await _tickerService.GetTickerMonthlyAdjustedAsync(tickername);
         }
 
-        [HttpGet("{tickerName}/montly")]
+        [HttpGet("{tickerName}/monthly")]
         public async Task<ActionResult<TickerInfo>> GetTickerMonthlyAsync(string tickername)
         {
             return await _tickerService.GetTickerMonthlyAsync(tickername);
