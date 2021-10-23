@@ -1,13 +1,5 @@
-﻿@page "/search"
-@using Stocks.Shared.Models
-@inject HttpClient _httpClient
-@inject NavigationManager _navigation
+﻿@inject NavigationManager _navigation
 
-<h3>Search</h3>
-
-<Stocks.Client.Components.TickerList Tickers="TickerList"/>
-
-@*
 @if (Tickers == null)
 {
 
@@ -16,7 +8,7 @@ else
 {
     <div class="form-group">
         <input class="form-control" type="text" placeholder="Filter..."
-               @bind="Filter"
+               @bind="_filter"
                @bind:event="oninput">
     </div>
     <table class="table">
@@ -67,18 +59,13 @@ else
             }
         </tbody>
     </table>
-}*@
-
-@code {
-    public Stocks.Shared.Models.Ticker[] TickerList { get; set; }
-@*    public string Filter { get; set; }*@
-
-protected async override Task OnInitializedAsync()
-{
-    TickerList = await _httpClient.GetFromJsonAsync<Stocks.Shared.Models.Ticker[]>("/api/ticker");
 }
+@code {
+    [ParameterAttribute]
+    public Stocks.Shared.Models.Ticker[] Tickers { get; set; }
+    private string _filter;
 
-@*    private void GoToTickerDaily(string ticker, bool adjusted)
+    private void GoToTickerDaily(string ticker, bool adjusted)
     {
         GoToTicker(ticker, "daily", adjusted);
     }
@@ -107,12 +94,12 @@ protected async override Task OnInitializedAsync()
 
     private bool IsVisible(Stocks.Shared.Models.Ticker ticker)
     {
-        if (string.IsNullOrEmpty(Filter))
+        if (string.IsNullOrEmpty(_filter))
             return true;
 
-        if (ticker.Name.Contains(Filter, StringComparison.OrdinalIgnoreCase))
+        if (ticker.Name.Contains(_filter, StringComparison.OrdinalIgnoreCase))
             return true;
 
         return false;
-    }*@
+    }
 }
