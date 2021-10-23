@@ -11,6 +11,11 @@
 }
 else
 {
+    <div class="form-group">
+        <input class="form-control" type="text" placeholder="Filter..."
+               @bind="Filter"
+               @bind:event="oninput">
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -20,39 +25,42 @@ else
         <tbody>
             @foreach (var ticker in Tickers.Reverse())
             {
-            <tr>
-                <td>@ticker.Name</td>
-                <td>
-                    <button class="btn btn-info" @onclick="() => GoToTickerDaily(ticker.Name, false)">
-                        Daily
-                    </button>
-                </td>
-                <td>
-                    <button class="btn btn-info" @onclick="() => GoToTickerDaily(ticker.Name, true)">
-                        Daily Adjusted
-                    </button>
-                </td>
-                <td>
-                    <button class="btn btn-info" @onclick="() => GoToTickerWeekly(ticker.Name, false)">
-                        Weekly
-                    </button>
-                </td>
-                <td>
-                    <button class="btn btn-info" @onclick="() => GoToTickerWeekly(ticker.Name, true)">
-                        Weekly Adjusted
-                    </button>
-                </td>
-                <td>
-                    <button class="btn btn-info" @onclick="() => GoToTickerMonthly(ticker.Name, false)">
-                        Monthly
-                    </button>
-                </td>
-                <td>
-                    <button class="btn btn-info" @onclick="() => GoToTickerMonthly(ticker.Name, true)">
-                        Monthly Adjusted
-                    </button>
-                </td>
-            </tr>
+                if (!IsVisible(ticker))
+                    continue;
+
+                <tr>
+                    <td>@ticker.Name</td>
+                    <td>
+                        <button class="btn btn-info" @onclick="() => GoToTickerDaily(ticker.Name, false)">
+                            Daily
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-info" @onclick="() => GoToTickerDaily(ticker.Name, true)">
+                            Daily Adjusted
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-info" @onclick="() => GoToTickerWeekly(ticker.Name, false)">
+                            Weekly
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-info" @onclick="() => GoToTickerWeekly(ticker.Name, true)">
+                            Weekly Adjusted
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-info" @onclick="() => GoToTickerMonthly(ticker.Name, false)">
+                            Monthly
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-info" @onclick="() => GoToTickerMonthly(ticker.Name, true)">
+                            Monthly Adjusted
+                        </button>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
@@ -60,6 +68,7 @@ else
 
 @code {
     public Stocks.Shared.Models.Ticker[] Tickers { get; set; }
+    public string Filter { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
@@ -86,9 +95,21 @@ else
         if (adjusted)
         {
             _navigation.NavigateTo($"ticker/{ticker}/{series}/adjusted", true);
-        } else
+        }
+        else
         {
             _navigation.NavigateTo($"ticker/{ticker}/{series}", true);
         }
+    }
+
+    private bool IsVisible(Stocks.Shared.Models.Ticker ticker)
+    {
+        if (string.IsNullOrEmpty(Filter))
+            return true;
+
+        if (ticker.Name.Contains(Filter, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
     }
 }
