@@ -20,9 +20,39 @@ else
         <tbody>
             @foreach (var ticker in Tickers.Reverse())
             {
-                <tr @onclick="() => GoToTicker(ticker.Name)">
-                    <td>@ticker.Name</td>
-                </tr>
+            <tr>
+                <td>@ticker.Name</td>
+                <td>
+                    <button class="btn btn-info" @onclick="() => GoToTickerDaily(ticker.Name, false)">
+                        Daily
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-info" @onclick="() => GoToTickerDaily(ticker.Name, true)">
+                        Daily Adjusted
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-info" @onclick="() => GoToTickerWeekly(ticker.Name, false)">
+                        Weekly
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-info" @onclick="() => GoToTickerWeekly(ticker.Name, true)">
+                        Weekly Adjusted
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-info" @onclick="() => GoToTickerMonthly(ticker.Name, false)">
+                        Monthly
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-info" @onclick="() => GoToTickerMonthly(ticker.Name, true)">
+                        Monthly Adjusted
+                    </button>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
@@ -36,8 +66,29 @@ else
         Tickers = await _httpClient.GetFromJsonAsync<Stocks.Shared.Models.Ticker[]>("/api/ticker");
     }
 
-    private void GoToTicker(string ticker)
+    private void GoToTickerDaily(string ticker, bool adjusted)
     {
-        _navigation.NavigateTo($"ticker/{ticker}", true);
+        GoToTicker(ticker, "daily", adjusted);
+    }
+
+    private void GoToTickerWeekly(string ticker, bool adjusted)
+    {
+        GoToTicker(ticker, "weekly", adjusted);
+    }
+
+    private void GoToTickerMonthly(string ticker, bool adjusted)
+    {
+        GoToTicker(ticker, "monthly", adjusted);
+    }
+
+    private void GoToTicker(string ticker, string series, bool adjusted)
+    {
+        if (adjusted)
+        {
+            _navigation.NavigateTo($"ticker/{ticker}/{series}/adjusted", true);
+        } else
+        {
+            _navigation.NavigateTo($"ticker/{ticker}/{series}", true);
+        }
     }
 }
