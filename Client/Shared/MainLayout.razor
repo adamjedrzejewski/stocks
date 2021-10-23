@@ -3,19 +3,32 @@
 @inject NavigationManager navigation
 
 <div class="page">
-    <AuthorizeView>
+@*    <AuthorizeView>
         <Authorized>
             <div class="sidebar">
                 <NavMenu />
             </div>
         </Authorized>
-    </AuthorizeView>
+    </AuthorizeView>*@
     <div class="main">
         <div class="top-row px-4">
             <AuthorizeView>
                 <Authorized>
+                    <ul class="nav flex-row">
+                        <il class="nav-item">
+                            <NavLink class="nav-link" href="search" Match="NavLinkMatch.All">
+                                <span class="oi oi-magnifying-glass" aria-hidden="true"></span> Browse
+                            </NavLink>
+                        </il>
+                        <il class="nav-item">
+                            <NavLink class="nav-link" href="watchlist">
+                                <span class="oi oi-list" aria-hidden="true"></span> Watchlist
+                            </NavLink>
+                        </il>
+                    </ul>
                     <span class="ml-md-auto">
                         Logged in as <b>@context.User.Identity.Name</b>
+
                         <button class="btn btn-danger" @onclick="LogoutUser">Logout</button>
                     </span>
                 </Authorized>
