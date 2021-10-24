@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Stocks.Shared.Models
 {
-    class WatchTicker
+    public class WatchTicker
     {
+        public int WatchId { get; set; }
         public string TickerName { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }

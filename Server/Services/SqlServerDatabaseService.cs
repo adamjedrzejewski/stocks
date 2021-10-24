@@ -40,5 +40,17 @@ namespace Stocks.Server.Services
         {
             return _dbContext.Users.Where(u => u.UserId == userID).FirstOrDefaultAsync();
         }
+
+        public Task<Ticker[]> GetUserWatchlistAsync(int userId)
+        {
+            var tickers = _dbContext.Watchlist
+                                    .Where(e => e.UserId == userId)
+                                    .Select(e =>
+                                        new Ticker
+                                        {
+                                            Name = e.TickerName
+                                        });
+            return Task.FromResult(tickers.ToArray()); 
+        }
     }
 }

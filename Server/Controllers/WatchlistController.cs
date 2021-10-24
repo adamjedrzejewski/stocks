@@ -21,9 +21,15 @@ namespace Stocks.Server.Controllers
         }
 
         [HttpGet("{userID}")]
-        public async Task<ActionResult<Ticker[]>> GetUserWatchList(int userId)
+        public async Task<ActionResult<Shared.Models.Ticker[]>> GetUserWatchList(int userId)
         {
-            return new Ticker[0];
+            return await _databaseService.GetUserWatchlistAsync(userId);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddToWatchList()
+        {
+            return StatusCode(201);
         }
 
     }

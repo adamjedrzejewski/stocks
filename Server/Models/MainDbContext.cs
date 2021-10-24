@@ -11,6 +11,7 @@ namespace Stocks.Server.Models
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Ticker> Tickers { get; set; }
+        public DbSet<WatchTicker> Watchlist { get; set; }
 
         public MainDbContext(DbContextOptions options) : base(options)
         {
@@ -35,6 +36,18 @@ namespace Stocks.Server.Models
                 builder.Property(e => e.Name).IsRequired().HasMaxLength(10);
             });
 
+            modelBuilder.Entity<WatchTicker>(builder =>
+            {
+                builder.ToTable("watchlist");
+                builder.HasKey(e => e.WatchId);
+                builder.Property(e => e.WatchId).IsRequired().ValueGeneratedOnAdd();
+                builder.Property(e => e.UserId).IsRequired();
+                builder.Property(e => e.TickerName).IsRequired().HasMaxLength(10);
+                builder.HasOne(e => e.User)
+                       .WithMany(e => e.Watchlist)
+                       .HasForeignKey(e => e.UserId);
+            });
+
             SeedData(modelBuilder);
         }
 
@@ -51,7 +64,13 @@ namespace Stocks.Server.Models
 
         private static void SeedData(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Ticker>().HasData(_tickers.Select((t, index) => new Ticker { TickerId = -index-1, Name = t }).ToArray());
+            modelBuilder.Entity<Ticker>().HasData(
+                _tickers.Select((t, index) => new Ticker
+                    {
+                        TickerId = -index-1,
+                        Name = t
+                    }).ToArray()
+            );
         }
     }
 }
