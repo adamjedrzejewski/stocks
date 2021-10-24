@@ -3,116 +3,18 @@
 @inject HttpClient _httpClient
 @inject NavigationManager _navigation
 
-<h3>Search</h3>
-
-<Stocks.Client.Components.TickerList Tickers="TickerList"/>
-
-@*
-@if (Tickers == null)
-{
-
-}
-else
-{
-    <div class="form-group">
-        <input class="form-control" type="text" placeholder="Filter..."
-               @bind="Filter"
-               @bind:event="oninput">
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Ticker</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var ticker in Tickers.Reverse())
-            {
-                if (!IsVisible(ticker))
-                    continue;
-
-                <tr>
-                    <td>@ticker.Name</td>
-                    <td>
-                        <button class="btn btn-info" @onclick="() => GoToTickerDaily(ticker.Name, false)">
-                            Daily
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btn btn-info" @onclick="() => GoToTickerDaily(ticker.Name, true)">
-                            Daily Adjusted
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btn btn-info" @onclick="() => GoToTickerWeekly(ticker.Name, false)">
-                            Weekly
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btn btn-info" @onclick="() => GoToTickerWeekly(ticker.Name, true)">
-                            Weekly Adjusted
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btn btn-info" @onclick="() => GoToTickerMonthly(ticker.Name, false)">
-                            Monthly
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btn btn-info" @onclick="() => GoToTickerMonthly(ticker.Name, true)">
-                            Monthly Adjusted
-                        </button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}*@
+<Stocks.Client.Components.TickerList Tickers="TickerList" ActionText="Add to watchlist" ActionClass="btn btn-outline-success" ActionCallback="@AddToWatchListAsync"/>
 
 @code {
     public Stocks.Shared.Models.Ticker[] TickerList { get; set; }
-@*    public string Filter { get; set; }*@
 
-protected async override Task OnInitializedAsync()
-{
-    TickerList = await _httpClient.GetFromJsonAsync<Stocks.Shared.Models.Ticker[]>("/api/ticker");
-}
-
-@*    private void GoToTickerDaily(string ticker, bool adjusted)
+    protected async override Task OnInitializedAsync()
     {
-        GoToTicker(ticker, "daily", adjusted);
+        TickerList = await _httpClient.GetFromJsonAsync<Stocks.Shared.Models.Ticker[]>("/api/ticker");
     }
 
-    private void GoToTickerWeekly(string ticker, bool adjusted)
+    public async Task AddToWatchListAsync(string tickername)
     {
-        GoToTicker(ticker, "weekly", adjusted);
     }
 
-    private void GoToTickerMonthly(string ticker, bool adjusted)
-    {
-        GoToTicker(ticker, "monthly", adjusted);
-    }
-
-    private void GoToTicker(string ticker, string series, bool adjusted)
-    {
-        if (adjusted)
-        {
-            _navigation.NavigateTo($"ticker/{ticker}/{series}/adjusted", true);
-        }
-        else
-        {
-            _navigation.NavigateTo($"ticker/{ticker}/{series}", true);
-        }
-    }
-
-    private bool IsVisible(Stocks.Shared.Models.Ticker ticker)
-    {
-        if (string.IsNullOrEmpty(Filter))
-            return true;
-
-        if (ticker.Name.Contains(Filter, StringComparison.OrdinalIgnoreCase))
-            return true;
-
-        return false;
-    }*@
 }

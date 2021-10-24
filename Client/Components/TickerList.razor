@@ -52,6 +52,9 @@ else
                             Monthly Adjusted
                         </button>
                     </td>
+                    <td>
+                        <button class=@ActionClass @onclick="() => ActionCallback.InvokeAsync(ticker.Name)" >@ActionText</button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -60,6 +63,16 @@ else
 @code {
     [ParameterAttribute]
     public Stocks.Shared.Models.Ticker[] Tickers { get; set; }
+
+    [ParameterAttribute]
+    public string ActionText { get; set; }
+
+    [ParameterAttribute]
+    public string ActionClass { get; set; }
+
+    [ParameterAttribute]
+    public EventCallback<string> ActionCallback { get; set; }
+
     private string _filter;
 
     private void GoToTickerDaily(string ticker, bool adjusted)

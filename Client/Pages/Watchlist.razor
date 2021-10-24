@@ -4,10 +4,12 @@
 @inject HttpClient _httpClient
 @inject AuthenticationStateProvider _authenticationStateProvider
 
-<Stocks.Client.Components.TickerList Tickers="TickerList" />
+<Stocks.Client.Components.TickerList Tickers="TickerList"  ActionText="Remove from watchlist" ActionClass="btn btn-outline-danger" ActionCallback="@RemoveFromWatchListAsync"/>
 
 @code {
+
     public Stocks.Shared.Models.Ticker[] TickerList { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
@@ -19,6 +21,10 @@
             var uri = $"/api/watchlist/{value}";
             TickerList = await _httpClient.GetFromJsonAsync<Stocks.Shared.Models.Ticker[]>(uri);
         }
+    }
+
+    private async Task RemoveFromWatchListAsync(string tickername)
+    {
     }
 
 }
