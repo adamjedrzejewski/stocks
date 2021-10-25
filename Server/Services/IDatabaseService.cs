@@ -13,5 +13,7 @@ namespace Stocks.Server.Services
         public Task AddUser(User user);
         public Task<Ticker[]> GetTickers();
         public Task<Ticker[]> GetUserWatchlistAsync(int userId);
+        public Task AddToWatchlist(WatchTicker watch);
+        public Task RemoveFromWatchlist(WatchTicker watch);
     }
 }

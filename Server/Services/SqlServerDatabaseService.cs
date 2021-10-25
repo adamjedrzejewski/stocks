@@ -20,6 +20,12 @@ namespace Stocks.Server.Services
             this._dbContext = dbContext;
         }
 
+        public async Task AddToWatchlist(WatchTicker watch)
+        {
+            _dbContext.Watchlist.Add(watch);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task AddUser(User user)
         {
             _dbContext.Users.Add(user);
@@ -51,6 +57,16 @@ namespace Stocks.Server.Services
                                             Name = e.TickerName
                                         });
             return Task.FromResult(tickers.ToArray()); 
+        }
+
+        public async Task RemoveFromWatchlist(WatchTicker watch)
+        {
+            var watch_obj = await _dbContext.Watchlist
+                                            .Where(e => e.UserId == watch.UserId && e.TickerName == watch.TickerName)
+                                            .FirstOrDefaultAsync();
+            _dbContext.Watchlist.Attach(watch_obj);
+            _dbContext.Watchlist.Remove(watch_obj);
+            _dbContext.SaveChanges();
         }
     }
 }

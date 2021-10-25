@@ -1,20 +1,42 @@
 ﻿@page "/search"
 @using Stocks.Shared.Models
+@using System.Security.Claims
 @inject HttpClient _httpClient
 @inject NavigationManager _navigation
+@inject AuthenticationStateProvider _authenticationStateProvider
 
-<Stocks.Client.Components.TickerList Tickers="TickerList" ActionText="Add to watchlist" ActionClass="btn btn-outline-success" ActionCallback="@AddToWatchListAsync"/>
+<Stocks.Client.Components.TickerList Tickers="TickerList" ActionText="Add to watchlist" ActionClass="btn btn-outline-success" ActionCallback="@AddToWatchListAsync" />
 
 @code {
     public Stocks.Shared.Models.Ticker[] TickerList { get; set; }
+    private ClaimsPrincipal _user;
+    private int _userId;
 
     protected async override Task OnInitializedAsync()
     {
-        TickerList = await _httpClient.GetFromJsonAsync<Stocks.Shared.Models.Ticker[]>("/api/ticker");
+        var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+        _user = authState.User;
+        if (_user.Identity.IsAuthenticated)
+        {
+            var claim = _user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier);
+            var value = claim?.Value;
+            _userId = Convert.ToInt32(value);
+            TickerList = await _httpClient.GetFromJsonAsync<Stocks.Shared.Models.Ticker[]>("/api/ticker");
+        }
     }
 
     public async Task AddToWatchListAsync(string tickername)
     {
+        if (_user.Identity.IsAuthenticated)
+        {
+            var watch = new WatchTicker
+            {
+                TickerName = tickername,
+                UserId = _userId
+            };
+            var uri = $"/api/watchlist";
+            await _httpClient.PostAsJsonAsync<WatchTicker>(uri, watch);
+        }
     }
 
 }

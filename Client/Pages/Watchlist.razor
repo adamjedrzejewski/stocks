@@ -1,30 +1,58 @@
 ﻿@page "/watchlist"
-@using Stocks.Shared
+@using Stocks.Shared.Models
 @using System.Security.Claims
+@using System.Text.Json
 @inject HttpClient _httpClient
 @inject AuthenticationStateProvider _authenticationStateProvider
 
-<Stocks.Client.Components.TickerList Tickers="TickerList"  ActionText="Remove from watchlist" ActionClass="btn btn-outline-danger" ActionCallback="@RemoveFromWatchListAsync"/>
+<Stocks.Client.Components.TickerList Tickers="TickerList" ActionText="Remove from watchlist" ActionClass="btn btn-outline-danger" ActionCallback="@RemoveFromWatchListAsync" />
 
 @code {
 
     public Stocks.Shared.Models.Ticker[] TickerList { get; set; }
+    private ClaimsPrincipal _user;
+    private int _userId;
 
     protected override async Task OnInitializedAsync()
     {
         var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-        if (user.Identity.IsAuthenticated)
+        _user = authState.User;
+        if (_user.Identity.IsAuthenticated)
         {
-            var claim = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier);
+            var claim = _user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier);
             var value = claim?.Value;
-            var uri = $"/api/watchlist/{value}";
-            TickerList = await _httpClient.GetFromJsonAsync<Stocks.Shared.Models.Ticker[]>(uri);
+            _userId = Convert.ToInt32(value);
+            await GetWatchlistAsync();
         }
+    }
+
+    private async Task GetWatchlistAsync()
+    {
+        var uri = $"/api/watchlist/{_userId}";
+        TickerList = await _httpClient.GetFromJsonAsync<Stocks.Shared.Models.Ticker[]>(uri);
     }
 
     private async Task RemoveFromWatchListAsync(string tickername)
     {
+        if (_user.Identity.IsAuthenticated)
+        {
+            var watch = new WatchTicker
+            {
+                TickerName = tickername,
+                UserId = _userId
+            };
+            var uri = $"/api/watchlist";
+            HttpRequestMessage request = new HttpRequestMessage
+            {
+                Content = JsonContent.Create(watch),
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri(uri, UriKind.Relative)
+            };
+
+            await _httpClient.SendAsync(request);
+            await GetWatchlistAsync();
+        }
     }
+
 
 }
