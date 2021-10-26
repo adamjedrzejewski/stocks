@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Stocks.Shared.Models
+namespace Stocks.Server.Models
 {
-    public class TickerInfo
+    public class Ticker
     {
 
         [JsonPropertyName("Time Series")]

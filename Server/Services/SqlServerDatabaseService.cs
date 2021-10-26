@@ -34,10 +34,11 @@ namespace Stocks.Server.Services
 
         public Task<User> GetLoggedInUserAsync(User user)
         {
+            // TODO: password salting
             return _dbContext.Users.Where(u => u.Username == user.Username && u.Password == user.Password).FirstOrDefaultAsync();
         }
 
-        public Task<Ticker[]> GetTickers()
+        public Task<Shared.Models.Ticker[]> GetTickers()
         {
             return Task.FromResult(_dbContext.Tickers.ToArray());
         }
@@ -47,12 +48,12 @@ namespace Stocks.Server.Services
             return _dbContext.Users.Where(u => u.UserId == userID).FirstOrDefaultAsync();
         }
 
-        public Task<Ticker[]> GetUserWatchlistAsync(int userId)
+        public Task<Shared.Models.Ticker[]> GetUserWatchlistAsync(int userId)
         {
             var tickers = _dbContext.Watchlist
                                     .Where(e => e.UserId == userId)
                                     .Select(e =>
-                                        new Ticker
+                                        new Shared.Models.Ticker
                                         {
                                             Name = e.TickerName
                                         });

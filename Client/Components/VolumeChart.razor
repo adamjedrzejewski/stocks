@@ -1,0 +1,69 @@
+﻿@using Stocks.Shared.Models
+
+<PlotlyChart Id="VolumeChart" Config="config" Layout="layout" Data="data" @ref="chart" />
+
+@code {
+    [Parameter]
+    public List<TickerDataPoint> TickerTimeSeries { get; set; }
+
+    List<ITrace> data = new List<ITrace>
+    {
+        new Scatter
+        {
+            Name = "Scatter",
+            Mode = Plotly.Blazor.Traces.ScatterLib.ModeFlag.Lines | Plotly.Blazor.Traces.ScatterLib.ModeFlag.Markers,
+            X = new List<object>(),
+            Y = new List<object>()
+        }
+    };
+    PlotlyChart chart;
+    Config config = new Config
+    {
+        Responsive = true
+    };
+    Layout layout = new Layout
+    {
+        DragMode = Plotly.Blazor.LayoutLib.DragModeEnum.Zoom,
+        Margin = new Plotly.Blazor.LayoutLib.Margin
+        {
+            R = 10,
+            T = 25,
+            B = 40,
+            L = 60
+        },
+        ShowLegend = true,
+        Title = new Plotly.Blazor.LayoutLib.Title
+        {
+            Text = "Volume"
+        },
+        YAxis = new List<Plotly.Blazor.LayoutLib.YAxis>
+        {
+            new Plotly.Blazor.LayoutLib.YAxis
+            {
+                AutoRange = Plotly.Blazor.LayoutLib.YAxisLib.AutoRangeEnum.True,
+                Type = Plotly.Blazor.LayoutLib.YAxisLib.TypeEnum.Linear
+            }
+        }
+    };
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (TickerTimeSeries == null)
+        {
+            return;
+        }
+
+        var dates = TickerTimeSeries.Select(k => k.Date).ToList();
+        var values = TickerTimeSeries.Select(k => k.Volume).Cast<object>().ToList();
+        var x = dates.Select(v => v).Cast<object>().ToList();
+        if (x.Count == 0)
+        {
+            dates.Add(new DateTime(2000, 1, 1));
+        }
+        if (chart.Data.FirstOrDefault() is not Scatter scatter) return;
+
+        scatter.X = x;
+        scatter.Y = values;
+        await chart.React();
+    }
+}

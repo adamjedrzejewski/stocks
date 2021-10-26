@@ -10,12 +10,21 @@ namespace Stocks.Shared.Models
     class TickerInfoMonthly
     {
         [JsonPropertyName("Monthly Time Series")]
-        public Dictionary<DateTime, TickerDataPoint> TimeSeries { get; set; }
+        public Dictionary<DateTime, Server.Models.TickerDataPoint> TimeSeries { get; set; }
 
-        public static implicit operator TickerInfo(TickerInfoMonthly tickerInfoWeekly)
-            => new TickerInfo
+        public static implicit operator TickerTimeSeries(TickerInfoMonthly tickerInfoWeekly)
+            => new Shared.Models.TickerTimeSeries
             {
-                TimeSeries = tickerInfoWeekly.TimeSeries
+                TimeSeries = tickerInfoWeekly.TimeSeries.Select(k =>
+                    new Shared.Models.TickerDataPoint
+                    {
+                        Open = k.Value.Open,
+                        Close = k.Value.Close,
+                        High = k.Value.High,
+                        Low = k.Value.Low,
+                        Date = k.Key,
+                        Volume = k.Value.Volume
+                    }).ToList()
             };
     }
 }

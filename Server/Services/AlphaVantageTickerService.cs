@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Stocks.Server.Services
 {
+    // TODO: store backups in database
     public class AlphaVantageTickerService : ITickerService
     {
         private readonly HttpClient _httpClient;
@@ -21,32 +22,32 @@ namespace Stocks.Server.Services
             this._apiKey = config["AlphaVantageServiceApiKey"];
         }
 
-        public async Task<TickerInfo> GetTickerDailyAdjustedAsync(string tickername)
+        public async Task<TickerTimeSeries> GetTickerDailyAdjustedAsync(string tickername)
         {
             return await GetTickerTimeSeries<TickerInfoDaily>("TIME_SERIES_DAILY_ADJUSTED", tickername);
         }
 
-        public async Task<TickerInfo> GetTickerDailyAsync(string tickername)
+        public async Task<TickerTimeSeries> GetTickerDailyAsync(string tickername)
         {
             return await GetTickerTimeSeries<TickerInfoDaily>("TIME_SERIES_DAILY", tickername);
         }
 
-        public async Task<TickerInfo> GetTickerMonthlyAdjustedAsync(string tickername)
+        public async Task<TickerTimeSeries> GetTickerMonthlyAdjustedAsync(string tickername)
         {
             return await GetTickerTimeSeries<TickerInfoMonthlyAdjusted>("TIME_SERIES_MONTHLY_ADJUSTED", tickername);
         }
 
-        public async Task<TickerInfo> GetTickerMonthlyAsync(string tickername)
+        public async Task<TickerTimeSeries> GetTickerMonthlyAsync(string tickername)
         {
             return await GetTickerTimeSeries<TickerInfoMonthly>("TIME_SERIES_MONTHLY", tickername);
         }
 
-        public async Task<TickerInfo> GetTickerWeeklyAdjustedAsync(string tickername)
+        public async Task<TickerTimeSeries> GetTickerWeeklyAdjustedAsync(string tickername)
         {
             return await GetTickerTimeSeries<TickerInfoWeeklyAdjusted>("TIME_SERIES_WEEKLY_ADJUSTED", tickername);
         }
 
-        public async Task<TickerInfo> GetTickerWeeklyAsync(string tickername)
+        public async Task<TickerTimeSeries> GetTickerWeeklyAsync(string tickername)
         {
             return await GetTickerTimeSeries<TickerInfoWeekly>("TIME_SERIES_WEEKLY", tickername);
         }

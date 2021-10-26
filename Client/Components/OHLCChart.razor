@@ -4,7 +4,7 @@
 
 @code {
     [Parameter]
-    public List<(DateTime date, TickerDataPoint point)> TickerTimeSeries { get; set; }
+    public List<TickerDataPoint> TickerTimeSeries { get; set; }
     List<ITrace> data = new List<ITrace>
     {
         new Ohlc
@@ -89,11 +89,11 @@
             return;
         }
 
-        var dates = TickerTimeSeries.Select(k => k.date).ToList();
-        var open = TickerTimeSeries.Select(k => k.point.Open).Cast<object>().ToList();
-        var close = TickerTimeSeries.Select(k => k.point.Close).Cast<object>().ToList();
-        var high = TickerTimeSeries.Select(k => k.point.High).Cast<object>().ToList();
-        var low = TickerTimeSeries.Select(k => k.point.Low).Cast<object>().ToList();
+        var dates = TickerTimeSeries.Select(k => k.Date).ToList();
+        var open = TickerTimeSeries.Select(k => k.Open).Cast<object>().ToList();
+        var close = TickerTimeSeries.Select(k => k.Close).Cast<object>().ToList();
+        var high = TickerTimeSeries.Select(k => k.High).Cast<object>().ToList();
+        var low = TickerTimeSeries.Select(k => k.Low).Cast<object>().ToList();
         var x = dates.Select(v => v).Cast<object>().ToList();
         if (x.Count == 0)
         {

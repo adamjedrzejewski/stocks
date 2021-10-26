@@ -23,39 +23,45 @@ namespace Stocks.Server.Controllers
         }
 
         [HttpGet("{tickerName}/daily/adjusted")]
-        public async Task<ActionResult<TickerInfo>> GetTickerDailyAdjustedAsync(string tickername)
+        public async Task<ActionResult<TickerTimeSeries>> GetTickerDailyAdjustedAsync(string tickername)
         {
-            return await _tickerService.GetTickerDailyAdjustedAsync(tickername);
+            var value = await _tickerService.GetTickerDailyAdjustedAsync(tickername);
+            return value;
         }
 
         [HttpGet("{tickerName}/daily")]
-        public async Task<ActionResult<TickerInfo>> GetTickerDailyAsync(string tickername)
+        public async Task<ActionResult<TickerTimeSeries>> GetTickerDailyAsync(string tickername)
         {
-            return await _tickerService.GetTickerDailyAsync(tickername);
+            var value = await _tickerService.GetTickerDailyAsync(tickername);
+            return value;
         }
 
         [HttpGet("{tickerName}/weekly/adjusted")]
-        public async Task<ActionResult<TickerInfo>> GetTickerWeeklyAdjustedAsync(string tickername)
+        public async Task<ActionResult<TickerTimeSeries>> GetTickerWeeklyAdjustedAsync(string tickername)
         {
-            return await _tickerService.GetTickerWeeklyAdjustedAsync(tickername);
+            var value = await _tickerService.GetTickerWeeklyAdjustedAsync(tickername);
+            return value;
         }
 
         [HttpGet("{tickerName}/weekly")]
-        public async Task<ActionResult<TickerInfo>> GetTickerWeeklyAsync(string tickername)
+        public async Task<ActionResult<TickerTimeSeries>> GetTickerWeeklyAsync(string tickername)
         {
-            return await _tickerService.GetTickerWeeklyAsync(tickername);
+            var value = await _tickerService.GetTickerWeeklyAsync(tickername);
+            return value;
         }
 
         [HttpGet("{tickerName}/monthly/adjusted")]
-        public async Task<ActionResult<TickerInfo>> GetTickerMonthlyAdjustedAsync(string tickername)
+        public async Task<ActionResult<TickerTimeSeries>> GetTickerMonthlyAdjustedAsync(string tickername)
         {
-            return await _tickerService.GetTickerMonthlyAdjustedAsync(tickername);
+            var value = await _tickerService.GetTickerMonthlyAdjustedAsync(tickername);
+            return value;
         }
 
         [HttpGet("{tickerName}/monthly")]
-        public async Task<ActionResult<TickerInfo>> GetTickerMonthlyAsync(string tickername)
+        public async Task<ActionResult<TickerTimeSeries>> GetTickerMonthlyAsync(string tickername)
         {
-            return await _tickerService.GetTickerMonthlyAsync(tickername);
+            var value = await _tickerService.GetTickerMonthlyAsync(tickername);
+            return value;
         }
 
         [HttpGet]

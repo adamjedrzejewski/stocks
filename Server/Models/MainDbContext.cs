@@ -10,7 +10,7 @@ namespace Stocks.Server.Models
     public class MainDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
-        public DbSet<Ticker> Tickers { get; set; }
+        public DbSet<Shared.Models.Ticker> Tickers { get; set; }
         public DbSet<WatchTicker> Watchlist { get; set; }
 
         public MainDbContext(DbContextOptions options) : base(options)
@@ -28,7 +28,7 @@ namespace Stocks.Server.Models
                 builder.Property(e => e.Password).IsRequired().HasMaxLength(100);
             });
 
-            modelBuilder.Entity<Ticker>(builder =>
+            modelBuilder.Entity<Shared.Models.Ticker>(builder =>
             {
                 builder.ToTable("tickers");
                 builder.HasKey(e => e.TickerId);
@@ -64,8 +64,8 @@ namespace Stocks.Server.Models
 
         private static void SeedData(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Ticker>().HasData(
-                _tickers.Select((t, index) => new Ticker
+            modelBuilder.Entity<Shared.Models.Ticker>().HasData(
+                _tickers.Select((t, index) => new Shared.Models.Ticker
                     {
                         TickerId = -index-1,
                         Name = t

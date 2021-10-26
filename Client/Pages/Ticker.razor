@@ -9,6 +9,7 @@
 {
     <h3>Ticker: @TickerName</h3>
     <Stocks.Client.Components.OHLCChart TickerTimeSeries="TickerTimeSeries" />
+    <Stocks.Client.Components.VolumeChart TickerTimeSeries="TickerTimeSeries" />
 }
 else
 {
@@ -27,7 +28,7 @@ else
     private bool _seriesOk = false;
     private List<string> _correctSeries = new List<string> { "daily", "weekly", "monthly" };
 
-    public List<(DateTime date, TickerDataPoint point)> TickerTimeSeries { get; set; }
+    public List<TickerDataPoint> TickerTimeSeries { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -38,8 +39,8 @@ else
         {
             var adjusted = _navigation.Uri.ToLower().Contains("adjusted") ? "/adjusted" : "";
             var uri = $"/api/ticker/{TickerName}/{Series}{adjusted}";
-            var tickerInfo = await _httpClient.GetFromJsonAsync<TickerInfo>(uri);
-            TickerTimeSeries = tickerInfo.TimeSeries.Select(k => (k.Key, k.Value)).OrderBy(k => k.Key).ToList();
+            var tickerInfo = await _httpClient.GetFromJsonAsync<TickerTimeSeries>(uri);
+            TickerTimeSeries = tickerInfo.TimeSeries.OrderBy(t => t.Date).ToList();
         }
     }
 
