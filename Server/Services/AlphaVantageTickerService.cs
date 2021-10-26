@@ -1,4 +1,5 @@
-﻿using Stocks.Server.Models;
+﻿using Microsoft.Extensions.Configuration;
+using Stocks.Server.Models;
 using Stocks.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,12 @@ namespace Stocks.Server.Services
     public class AlphaVantageTickerService : ITickerService
     {
         private readonly HttpClient _httpClient;
+        private readonly String _apiKey;
 
-        public AlphaVantageTickerService(HttpClient httpClient)
+        public AlphaVantageTickerService(HttpClient httpClient, IConfiguration config)
         {
             this._httpClient = httpClient;
+            this._apiKey = config["AlphaVantageServiceApiKey"];
         }
 
         public async Task<TickerInfo> GetTickerDailyAdjustedAsync(string tickername)
@@ -50,7 +53,7 @@ namespace Stocks.Server.Services
 
         private async Task<T> GetTickerTimeSeries<T>(string series, string tickername)
         {
-            string QUERY_URL = $"https://www.alphavantage.co/query?function={series}&symbol=IBM&apikey=demo";
+            string QUERY_URL = $"https://www.alphavantage.co/query?function={series}&symbol={tickername}&apikey={_apiKey}";
             var tickerInfo = await _httpClient.GetFromJsonAsync<T>(QUERY_URL);
             return tickerInfo;
         }
