@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Stocks.Server.Models;
-using Stocks.Shared.Models;
+using Stocks.Server.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +38,7 @@ namespace Stocks.Server.Services
             return _dbContext.Users.Where(u => u.Username == user.Username && u.Password == user.Password).FirstOrDefaultAsync();
         }
 
-        public Task<Shared.Models.Ticker[]> GetTickers()
+        public Task<Models.DTO.Ticker[]> GetTickers()
         {
             return Task.FromResult(_dbContext.Tickers.ToArray());
         }
@@ -48,12 +48,12 @@ namespace Stocks.Server.Services
             return _dbContext.Users.Where(u => u.UserId == userID).FirstOrDefaultAsync();
         }
 
-        public Task<Shared.Models.Ticker[]> GetUserWatchlistAsync(int userId)
+        public Task<Models.DTO.Ticker[]> GetUserWatchlistAsync(int userId)
         {
             var tickers = _dbContext.Watchlist
                                     .Where(e => e.UserId == userId)
                                     .Select(e =>
-                                        new Shared.Models.Ticker
+                                        new Models.DTO.Ticker
                                         {
                                             Name = e.TickerName
                                         });

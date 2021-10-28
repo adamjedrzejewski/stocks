@@ -1,4 +1,4 @@
-﻿using Stocks.Shared.Models;
+﻿using Stocks.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +8,12 @@ namespace Stocks.Server.Services
 {
     public interface IDatabaseService
     {
-        public Task<User> GetLoggedInUserAsync(User user);
-        public Task<User> GetUserById(int userID);
-        public Task AddUser(User user);
-        public Task<Ticker[]> GetTickers();
-        public Task<Ticker[]> GetUserWatchlistAsync(int userId);
-        public Task AddToWatchlist(WatchTicker watch);
-        public Task RemoveFromWatchlist(WatchTicker watch);
+        public Task<Models.DTO.User> GetLoggedInUserAsync(Models.DTO.User user);
+        public Task<Models.DTO.User> GetUserById(int userID);
+        public Task AddUser(Models.DTO.User user);
+        public Task<Models.DTO.Ticker[]> GetTickers();
+        public Task<Models.DTO.Ticker[]> GetUserWatchlistAsync(int userId);
+        public Task AddToWatchlist(Models.DTO.WatchTicker watch);
+        public Task RemoveFromWatchlist(Models.DTO.WatchTicker watch);
     }
 }

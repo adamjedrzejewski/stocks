@@ -24,7 +24,9 @@ namespace Stocks.Server.Controllers
         [HttpGet("{userID}")]
         public async Task<ActionResult<Shared.Models.Ticker[]>> GetUserWatchList(int userId)
         {
-            return await _databaseService.GetUserWatchlistAsync(userId);
+            var tickers = await _databaseService.GetUserWatchlistAsync(userId);
+            var tickersArray = tickers.Select(t => (Shared.Models.Ticker) t).ToArray();
+            return tickersArray;
         }
 
         [HttpPost]

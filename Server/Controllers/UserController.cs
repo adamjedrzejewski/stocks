@@ -23,7 +23,7 @@ namespace Stocks.Server.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<User>> LoginUserAsync(User user)
+        public async Task<ActionResult<Shared.Models.User>> LoginUserAsync(Shared.Models.User user)
         {
             var loggedInUser = await _databaseService.GetLoggedInUserAsync(user);
             if (loggedInUser != null)
@@ -36,18 +36,18 @@ namespace Stocks.Server.Controllers
                 
             }
 
-            return loggedInUser;
+            return (Shared.Models.User) loggedInUser;
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser(User user)
+        public async Task<IActionResult> RegisterUser(Shared.Models.User user)
         {
             await _databaseService.AddUser(user);
             return Ok();
         }
 
         [HttpGet("current")]
-        public async Task<ActionResult<User>> GetCurrentUserAsync()
+        public async Task<ActionResult<Shared.Models.User>> GetCurrentUserAsync()
         {
             var user = new User();
             if (User.Identity.IsAuthenticated)
@@ -66,10 +66,10 @@ namespace Stocks.Server.Controllers
         }
 
         [HttpGet("profile/{userId}")]
-        public async Task<ActionResult<User>> GetProfileAsync(int userId)
+        public async Task<ActionResult<Shared.Models.User>> GetProfileAsync(int userId)
         {
             var result =  await _databaseService.GetUserById(userId);
-            return result;
+            return (Shared.Models.User) result;
         }
     }
 }

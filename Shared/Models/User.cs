@@ -11,7 +11,5 @@ namespace Stocks.Shared.Models
         public int UserId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-
-        public virtual HashSet<WatchTicker> Watchlist { get; set; } = new HashSet<WatchTicker>();
     }
 }

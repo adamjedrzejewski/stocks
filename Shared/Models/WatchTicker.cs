@@ -11,6 +11,5 @@ namespace Stocks.Shared.Models
         public int WatchId { get; set; }
         public string TickerName { get; set; }
         public int UserId { get; set; }
-        public User User { get; set; }
     }
 }

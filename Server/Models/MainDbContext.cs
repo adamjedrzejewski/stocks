@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Stocks.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +8,9 @@ namespace Stocks.Server.Models
 {
     public class MainDbContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Shared.Models.Ticker> Tickers { get; set; }
-        public DbSet<WatchTicker> Watchlist { get; set; }
+        public DbSet<DTO.User> Users { get; set; }
+        public DbSet<DTO.Ticker> Tickers { get; set; }
+        public DbSet<DTO.WatchTicker> Watchlist { get; set; }
 
         public MainDbContext(DbContextOptions options) : base(options)
         {
@@ -20,7 +19,7 @@ namespace Stocks.Server.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>(builder =>
+            modelBuilder.Entity<DTO.User>(builder =>
             {
                 builder.ToTable("users");
                 builder.HasKey(e => e.UserId);
@@ -28,7 +27,7 @@ namespace Stocks.Server.Models
                 builder.Property(e => e.Password).IsRequired().HasMaxLength(100);
             });
 
-            modelBuilder.Entity<Shared.Models.Ticker>(builder =>
+            modelBuilder.Entity<DTO.Ticker>(builder =>
             {
                 builder.ToTable("tickers");
                 builder.HasKey(e => e.TickerId);
@@ -36,7 +35,7 @@ namespace Stocks.Server.Models
                 builder.Property(e => e.Name).IsRequired().HasMaxLength(10);
             });
 
-            modelBuilder.Entity<WatchTicker>(builder =>
+            modelBuilder.Entity<DTO.WatchTicker>(builder =>
             {
                 builder.ToTable("watchlist");
                 builder.HasKey(e => e.WatchId);
@@ -64,8 +63,8 @@ namespace Stocks.Server.Models
 
         private static void SeedData(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Shared.Models.Ticker>().HasData(
-                _tickers.Select((t, index) => new Shared.Models.Ticker
+            modelBuilder.Entity<DTO.Ticker>().HasData(
+                _tickers.Select((t, index) => new DTO.Ticker
                     {
                         TickerId = -index-1,
                         Name = t
