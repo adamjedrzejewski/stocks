@@ -21,7 +21,7 @@ namespace Stocks.Server.Services
 
         public async Task<Shared.Models.TickerTimeSeries> GetTickerDailyAdjustedAsync(string tickername)
         {
-            return await GetTickerTimeSeries<Models.AlphaVantage.TickerInfoDaily>("TIME_SERIES_DAILY_ADJUSTED", tickername);
+            return await GetTickerTimeSeries<Models.AlphaVantage.TickerInfoDailyAdjusted>("TIME_SERIES_DAILY_ADJUSTED", tickername);
         }
 
         public async Task<Shared.Models.TickerTimeSeries> GetTickerDailyAsync(string tickername)
