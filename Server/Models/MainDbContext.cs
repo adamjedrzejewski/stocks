@@ -11,6 +11,7 @@ namespace Stocks.Server.Models
         public DbSet<DTO.User> Users { get; set; }
         public DbSet<DTO.Ticker> Tickers { get; set; }
         public DbSet<DTO.WatchTicker> Watchlist { get; set; }
+        public DbSet<DTO.TickerDataPoint> TickerDataPoints { get; set; }
 
         public MainDbContext(DbContextOptions options) : base(options)
         {
@@ -19,6 +20,17 @@ namespace Stocks.Server.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<DTO.TickerDataPoint>(builder =>
+            {
+                builder.ToTable("ticker_data_points");
+                builder.HasKey(e => new { e.Date, e.TickerName });
+                builder.Property(e => e.High).IsRequired();
+                builder.Property(e => e.Low).IsRequired();
+                builder.Property(e => e.Open).IsRequired();
+                builder.Property(e => e.Close).IsRequired();
+                builder.Property(e => e.Volume).IsRequired();
+            });
+
             modelBuilder.Entity<DTO.User>(builder =>
             {
                 builder.ToTable("users");
