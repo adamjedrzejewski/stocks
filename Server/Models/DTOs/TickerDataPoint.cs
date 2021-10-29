@@ -17,5 +17,17 @@ namespace Stocks.Server.Models.DTO
         public float Close { get; set; }
 
         public decimal Volume { get; set; }
+
+        public static implicit operator Shared.Models.TickerDataPoint(TickerDataPoint dataPoint)
+            => new()
+            {
+                Close = dataPoint.Close,
+                Open = dataPoint.Open,
+                Date = dataPoint.Date,
+                High = dataPoint.High,
+                Low = dataPoint.Low,
+                Volume = dataPoint.Volume
+            };
+
     }
 }

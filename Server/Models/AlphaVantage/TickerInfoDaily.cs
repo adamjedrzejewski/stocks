@@ -5,10 +5,13 @@ using System.Text.Json.Serialization;
 
 namespace Stocks.Server.Models.AlphaVantage
 {
-    class TickerInfoDaily
+    public class TickerInfoDaily : TickerInfo
     {
         [JsonPropertyName("Time Series (Daily)")]
         public Dictionary<DateTime, TickerDataPoint> TimeSeries { get; set; }
+
+        public Shared.Models.TickerTimeSeries ToSharedTickerTimeSeries()
+            => (Shared.Models.TickerTimeSeries) this;
 
         public static implicit operator Shared.Models.TickerTimeSeries(TickerInfoDaily tickerInfoWeekly)
             => new()

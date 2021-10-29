@@ -79,12 +79,7 @@ namespace Stocks.Server.Services
         {
             foreach (var point in points)
             {
-                if (_dbContext.TickerDataPoints.Any(e => e.Date == point.Date && e.TickerName == point.TickerName))
-                {
-                    _dbContext.TickerDataPoints.Attach(point);
-                    _dbContext.Entry(point).State = EntityState.Modified;
-                }
-                else
+                if (!_dbContext.TickerDataPoints.Any(e => e.Date == point.Date && e.TickerName == point.TickerName))
                 {
                     _dbContext.TickerDataPoints.Attach(point);
                 }

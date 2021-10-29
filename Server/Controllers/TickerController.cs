@@ -25,14 +25,40 @@ namespace Stocks.Server.Controllers
         public async Task<ActionResult<Shared.Models.TickerTimeSeries>> GetTickerDailyAdjustedAsync(string tickername)
         {
             var value = await _tickerService.GetTickerDailyAdjustedAsync(tickername);
-            return value;
+            if (value != null)
+            {
+                // TODO add to DB
+                return value;
+            }
+            else
+            {
+                var series = await _databaseService.GetTickerTimeSeries(tickername);
+                var seriesList = series.Select(e => (Shared.Models.TickerDataPoint) e).ToList();
+                return new Shared.Models.TickerTimeSeries()
+                { 
+                    TimeSeries = seriesList
+                };
+            }
         }
 
         [HttpGet("{tickerName}/daily")]
         public async Task<ActionResult<Shared.Models.TickerTimeSeries>> GetTickerDailyAsync(string tickername)
         {
             var value = await _tickerService.GetTickerDailyAsync(tickername);
-            return value;
+            if (value != null)
+            {
+                // TODO add to DB
+                return value;
+            }
+            else
+            {
+                var series = await _databaseService.GetTickerTimeSeries(tickername);
+                var seriesList = series.Select(e => (Shared.Models.TickerDataPoint)e).ToList();
+                return new Shared.Models.TickerTimeSeries()
+                {
+                    TimeSeries = seriesList
+                };
+            }
         }
 
         [HttpGet("{tickerName}/weekly/adjusted")]
@@ -46,21 +72,60 @@ namespace Stocks.Server.Controllers
         public async Task<ActionResult<Shared.Models.TickerTimeSeries>> GetTickerWeeklyAsync(string tickername)
         {
             var value = await _tickerService.GetTickerWeeklyAsync(tickername);
-            return value;
+            if (value != null)
+            {
+                // TODO add to DB
+                return value;
+            }
+            else
+            {
+                var series = await _databaseService.GetTickerTimeSeries(tickername);
+                var seriesList = series.Select(e => (Shared.Models.TickerDataPoint)e).ToList();
+                return new Shared.Models.TickerTimeSeries()
+                {
+                    TimeSeries = seriesList
+                };
+            }
         }
 
         [HttpGet("{tickerName}/monthly/adjusted")]
         public async Task<ActionResult<Shared.Models.TickerTimeSeries>> GetTickerMonthlyAdjustedAsync(string tickername)
         {
             var value = await _tickerService.GetTickerMonthlyAdjustedAsync(tickername);
-            return value;
+            if (value != null)
+            {
+                // TODO add to DB
+                return value;
+            }
+            else
+            {
+                var series = await _databaseService.GetTickerTimeSeries(tickername);
+                var seriesList = series.Select(e => (Shared.Models.TickerDataPoint)e).ToList();
+                return new Shared.Models.TickerTimeSeries()
+                {
+                    TimeSeries = seriesList
+                };
+            }
         }
 
         [HttpGet("{tickerName}/monthly")]
         public async Task<ActionResult<Shared.Models.TickerTimeSeries>> GetTickerMonthlyAsync(string tickername)
         {
             var value = await _tickerService.GetTickerMonthlyAsync(tickername);
-            return value;
+            if (value != null)
+            {
+                // TODO add to DB
+                return value;
+            }
+            else
+            {
+                var series = await _databaseService.GetTickerTimeSeries(tickername);
+                var seriesList = series.Select(e => (Shared.Models.TickerDataPoint)e).ToList();
+                return new Shared.Models.TickerTimeSeries()
+                {
+                    TimeSeries = seriesList
+                };
+            }
         }
 
         [HttpGet]

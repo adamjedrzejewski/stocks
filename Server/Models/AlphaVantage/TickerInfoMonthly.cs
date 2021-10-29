@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace Stocks.Server.Models.AlphaVantage
 {
-    class TickerInfoMonthly
+    class TickerInfoMonthly : TickerInfo
     {
         [JsonPropertyName("Monthly Time Series")]
         public Dictionary<DateTime, TickerDataPoint> TimeSeries { get; set; }
+
+        public Shared.Models.TickerTimeSeries ToSharedTickerTimeSeries()
+            => this;
 
         public static implicit operator Shared.Models.TickerTimeSeries(TickerInfoMonthly tickerInfoWeekly)
             => new()

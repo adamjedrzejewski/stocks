@@ -8,13 +8,14 @@ namespace Stocks.Server.Services
 {
     public interface ITickerService
     {
-        public Task<TickerTimeSeries> GetTickerDailyAdjustedAsync(string tickername);
-        public Task<TickerTimeSeries> GetTickerDailyAsync(string tickername);
+#nullable enable
+        public Task<TickerTimeSeries?> GetTickerDailyAdjustedAsync(string tickername);
+        public Task<TickerTimeSeries?> GetTickerDailyAsync(string tickername);
 
-        public Task<TickerTimeSeries> GetTickerWeeklyAdjustedAsync(string tickername);
-        public Task<TickerTimeSeries> GetTickerWeeklyAsync(string tickername);
+        public Task<TickerTimeSeries?> GetTickerWeeklyAdjustedAsync(string tickername);
+        public Task<TickerTimeSeries?> GetTickerWeeklyAsync(string tickername);
 
-        public Task<TickerTimeSeries> GetTickerMonthlyAdjustedAsync(string tickername);
-        public Task<TickerTimeSeries> GetTickerMonthlyAsync(string tickername);
+        public Task<TickerTimeSeries?> GetTickerMonthlyAdjustedAsync(string tickername);
+        public Task<TickerTimeSeries?> GetTickerMonthlyAsync(string tickername);
     }
 }

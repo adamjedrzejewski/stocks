@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Stocks.Shared.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -6,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace Stocks.Server.Models.AlphaVantage
 {
-    public class TickerInfoWeeklyAdjusted
+    public class TickerInfoWeeklyAdjusted : TickerInfo
     {
         [JsonPropertyName("Weekly Adjusted Time Series")]
         public Dictionary<DateTime, TickerDataPointAdjusted> TimeSeries { get; set; }
+
+        public TickerTimeSeries ToSharedTickerTimeSeries()
+            => this;
 
         public static implicit operator Shared.Models.TickerTimeSeries(TickerInfoWeeklyAdjusted tickerInfoWeekly)
             => new()
