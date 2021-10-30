@@ -43,9 +43,12 @@ namespace Stocks.Server.Services
             return Task.FromResult(_dbContext.Tickers.ToArray());
         }
 
-        public async Task<TickerDataPoint[]> GetTickerTimeSeries(string tickername)
+        public async Task<TickerDataPoint[]> GetTickerTimeSeries(string tickername, TimeSeries series)
         {
-            return await _dbContext.TickerDataPoints.Where(t => t.TickerName == tickername).ToArrayAsync();
+            string seriesName = series.SeriesStringName();
+            return await _dbContext.TickerDataPoints
+                                   .Where(t => t.TickerName == tickername && t.SeriesName == seriesName)
+                                   .ToArrayAsync();
         }
 
         public Task<User> GetUserById(int userID)
@@ -79,7 +82,7 @@ namespace Stocks.Server.Services
         {
             foreach (var point in points)
             {
-                if (!_dbContext.TickerDataPoints.Any(e => e.Date == point.Date && e.TickerName == point.TickerName))
+                if (!_dbContext.TickerDataPoints.Any(e => e.Date == point.Date && e.TickerName == point.TickerName && e.SeriesName == point.SeriesName))
                 {
                     _dbContext.TickerDataPoints.Attach(point);
                 }

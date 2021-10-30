@@ -23,12 +23,15 @@ namespace Stocks.Server.Models
             modelBuilder.Entity<DTO.TickerDataPoint>(builder =>
             {
                 builder.ToTable("ticker_data_points");
-                builder.HasKey(e => new { e.Date, e.TickerName });
+                builder.HasKey(e => e.Id);
+                builder.Property(e => e.Date).IsRequired();
+                builder.Property(e => e.TickerName).IsRequired();
                 builder.Property(e => e.High).IsRequired();
                 builder.Property(e => e.Low).IsRequired();
                 builder.Property(e => e.Open).IsRequired();
                 builder.Property(e => e.Close).IsRequired();
                 builder.Property(e => e.Volume).IsRequired();
+                builder.Property(e => e.SeriesName).IsRequired();
             });
 
             modelBuilder.Entity<DTO.User>(builder =>

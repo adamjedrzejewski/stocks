@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Stocks.Server.Models;
+using System.Threading.Tasks;
 
 namespace Stocks.Server.Services
 {
@@ -12,7 +13,7 @@ namespace Stocks.Server.Services
         public Task AddToWatchlist(Models.DTO.WatchTicker watch);
         public Task RemoveFromWatchlist(Models.DTO.WatchTicker watch);
 
-        public Task<Models.DTO.TickerDataPoint[]> GetTickerTimeSeries(string tickername);
+        public Task<Models.DTO.TickerDataPoint[]> GetTickerTimeSeries(string tickername, TimeSeries name);
         public Task UpdateTickerDataPoint(Models.DTO.TickerDataPoint[] points);
     }
 }

@@ -4,6 +4,10 @@ namespace Stocks.Server.Models.DTO
 {
     public class TickerDataPoint
     {
+        public int Id { get; set; }
+
+        public string SeriesName { get; set; }
+
         public string TickerName { get; set; }
 
         public DateTime Date { get; set; }
