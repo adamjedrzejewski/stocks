@@ -7,6 +7,7 @@ namespace Stocks.Server.Services
     {
         public Task<Models.DTO.User> GetLoggedInUserAsync(Models.DTO.User user);
         public Task<Models.DTO.User> GetUserById(int userID);
+        public Task<bool> UsernameExistsAsync(Models.DTO.User user);
         public Task AddUser(Models.DTO.User user);
         public Task<Models.DTO.Ticker[]> GetTickers();
         public Task<Models.DTO.Ticker[]> GetUserWatchlistAsync(int userId);

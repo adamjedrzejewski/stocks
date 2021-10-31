@@ -42,6 +42,11 @@ namespace Stocks.Server.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser(Shared.Models.User user)
         {
+            if (await _databaseService.UsernameExistsAsync(user))
+            {
+                return StatusCode(409);
+            }
+
             await _databaseService.AddUser(user);
             return Ok();
         }

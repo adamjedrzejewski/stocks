@@ -37,6 +37,9 @@ namespace Stocks.Client
             builder.Services.AddHttpClient<IProfileViewModel, ProfileViewModel>
                 ("StocksClient", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
 
+            builder.Services.AddHttpClient<IRegisterViewModel, RegisterViewModel>
+                ("StocksClient", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
             
             await builder.Build().RunAsync();

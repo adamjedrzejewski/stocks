@@ -92,5 +92,10 @@ namespace Stocks.Server.Services
             }
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<bool> UsernameExistsAsync(User user)
+        {
+            return await _dbContext.Users.AnyAsync(u => u.Username == user.Username);
+        }
     }
 }

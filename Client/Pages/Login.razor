@@ -3,6 +3,7 @@
 @inject HttpClient httpClient
 @inject NavigationManager navigation
 @inject ILoginViewModel loginViewModel
+@inject IRegisterViewModel registerViewModel
 
 <h3>Login</h3>
 <hr />
@@ -17,15 +18,50 @@
     </div>
     <br />
     <div class="col-6">
-        <button class="btn btn-primary" @onclick="LoginUser">Login</button>
+        <button class="btn btn-primary">Login</button>
+    </div>
+</form>
+
+<br />
+<br />
+<h3>Register</h3>
+<hr />
+@if (!_valid_registration)
+{
+    <span>Invalid username</span>
+}
+@if (_show_register_success)
+{
+    <span>Registered</span>
+}
+<form @onsubmit="RegisterUser">
+    <div class="col-6">
+        <input type="text" class="form-control" placeholder="username" @bind="registerViewModel.Username" />
+    </div>
+    <br />
+    <div class="col-6">
+        <input type="password" class="form-control" placeholder="password" @bind="registerViewModel.Password" />
+    </div>
+    <br />
+    <div class="col-6">
+        <button class="btn btn-primary">Regiser</button>
     </div>
 </form>
 
 
 @code {
+    private bool _valid_registration = true;
+    private bool _show_register_success = false;
+
     private async Task LoginUser()
     {
         await loginViewModel.LoginUserAsync();
         navigation.NavigateTo("/", true);
+    }
+
+    private async Task RegisterUser()
+    {
+        _valid_registration = await registerViewModel.RegisterUserAsync();
+        _show_register_success = _valid_registration;
     }
 }
