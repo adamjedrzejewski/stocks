@@ -11,7 +11,6 @@ namespace Stocks.Server.Services
 {
 
 #nullable enable
-    // TODO: store backups in database
     public class AlphaVantageTickerService : ITickerService
     {
         private readonly IDatabaseService _databaseService;
