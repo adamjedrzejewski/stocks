@@ -7,7 +7,12 @@
 
 @if (_seriesOk)
 {
-    <h3>Ticker: @TickerName</h3>
+    <h3>Ticker: @TickerName
+    @foreach (var (name, redirect) in redirectButtons)
+    {
+        <button style="margin: 5px 10px 5px 10px" class="btn btn-info" @onclick="() => ButtonRedirect(redirect)">@name</button>
+    }
+    </h3>
     <Stocks.Client.Components.OHLCChart TickerTimeSeries="TickerTimeSeries" />
     <Stocks.Client.Components.VolumeChart TickerTimeSeries="TickerTimeSeries" />
 }
@@ -25,10 +30,19 @@ else
     [Parameter]
     public string Series { get; set; }
 
+    public List<TickerDataPoint> TickerTimeSeries { get; set; }
+
     private bool _seriesOk = false;
     private List<string> _correctSeries = new List<string> { "daily", "weekly", "monthly" };
-
-    public List<TickerDataPoint> TickerTimeSeries { get; set; }
+    private List<(string name, string redirect)> redirectButtons = new List<(string, string)>
+    {
+        ("Daily", "daily"),
+        ("Daily Adjusted", "daily/adjusted"),
+        ("Weekly", "weekly"),
+        ("Weekly Adjusted", "weekly/adjusted"),
+        ("Monthly", "monthly"),
+        ("Monthly Adjusted", "monthly/adjusted")
+    };
 
     protected override async Task OnInitializedAsync()
     {
@@ -42,6 +56,11 @@ else
             var tickerInfo = await _httpClient.GetFromJsonAsync<TickerTimeSeries>(uri);
             TickerTimeSeries = tickerInfo.TimeSeries.OrderBy(t => t.Date).ToList();
         }
+    }
+
+    private void ButtonRedirect(string path)
+    {
+        _navigation.NavigateTo($"ticker/{TickerName}/{path}", true);
     }
 
 }
