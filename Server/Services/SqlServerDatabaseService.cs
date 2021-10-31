@@ -22,8 +22,11 @@ namespace Stocks.Server.Services
 
         public async Task AddToWatchlist(WatchTicker watch)
         {
-            _dbContext.Watchlist.Add(watch);
-            await _dbContext.SaveChangesAsync();
+            if (!_dbContext.Watchlist.Any(w => w.TickerName == watch.TickerName && w.UserId == watch.UserId))
+            {
+                _dbContext.Watchlist.Add(watch);
+                await _dbContext.SaveChangesAsync();
+            }
         }
 
         public async Task AddUser(User user)
