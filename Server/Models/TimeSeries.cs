@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Stocks.Server.Models
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public enum TimeSeries 
     {
         DAILY,

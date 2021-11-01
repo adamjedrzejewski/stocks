@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Stocks.Server.Models.AlphaVantage
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     class TickerInfoMonthly : TickerInfo
     {
         [JsonPropertyName("Monthly Time Series")]

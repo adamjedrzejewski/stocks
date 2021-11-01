@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace Stocks.Server.Models.AlphaVantage
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class TickerInfoMonthlyAdjusted : TickerInfo
     {
         [JsonPropertyName("Monthly Adjusted Time Series")]

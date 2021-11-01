@@ -5,12 +5,16 @@ using System.Threading.Tasks;
 
 namespace Stocks.Server.Models.DTO
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class Ticker
     {
+
         public int TickerId { get; set; }
+
         public string Name { get; set; }
 
         public static implicit operator Shared.Models.Ticker(Ticker ticker)
+
             => new()
             {
                 Name = ticker.Name,
@@ -25,4 +29,5 @@ namespace Stocks.Server.Models.DTO
             };
 
     }
+
 }

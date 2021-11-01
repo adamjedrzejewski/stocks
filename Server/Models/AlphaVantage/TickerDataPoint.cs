@@ -2,6 +2,7 @@
 
 namespace Stocks.Server.Models.AlphaVantage
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class TickerDataPoint
     {
         [JsonPropertyName("1. open")]

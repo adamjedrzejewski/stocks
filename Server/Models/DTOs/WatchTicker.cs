@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace Stocks.Server.Models.DTO
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class WatchTicker
     {
         public int WatchId { get; set; }
