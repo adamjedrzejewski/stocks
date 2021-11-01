@@ -11,19 +11,33 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace Stocks.Server.Controllers
 {
+    /// <summary>
+    /// Serves information about user
+    /// </summary>
     [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase
     {
         private readonly IDatabaseService _databaseService;
 
+        /// <summary>
+        /// Constructs new instance of UserController
+        /// </summary>
+        /// <param name="databaseService"></param>
         public UserController(IDatabaseService databaseService)
         {
             this._databaseService = databaseService;
         }
 
+        /// <summary>
+        /// Login user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <response code="200">User has been logged in</response>
         [HttpPost("login")]
-        public async Task<ActionResult<Shared.Models.User>> LoginUserAsync(Shared.Models.User user)
+        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+        public async Task<ActionResult<User>> LoginUserAsync(User user)
         {
             var loggedInUser = await _databaseService.GetLoggedInUserAsync(user);
             if (loggedInUser != null)
@@ -36,11 +50,20 @@ namespace Stocks.Server.Controllers
                 
             }
 
-            return (Shared.Models.User) loggedInUser;
+            return (User) loggedInUser;
         }
 
+        /// <summary>
+        /// Register new user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <response code="200">User has been registered</response>
+        /// <response code="409">If user with such username already exist</response>
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser(Shared.Models.User user)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<IActionResult> RegisterUser(User user)
         {
             if (await _databaseService.UsernameExistsAsync(user))
             {
@@ -51,8 +74,14 @@ namespace Stocks.Server.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Get current user
+        /// </summary>
+        /// <returns>Current user</returns>
+        /// <response code="200">Current user</response>
         [HttpGet("current")]
-        public async Task<ActionResult<Shared.Models.User>> GetCurrentUserAsync()
+        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+        public Task<ActionResult<User>> GetCurrentUserAsync()
         {
             var user = new User();
             if (User.Identity.IsAuthenticated)
@@ -60,21 +89,42 @@ namespace Stocks.Server.Controllers
                 user.Username = User.FindFirstValue(ClaimTypes.Name);
                 user.UserId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
-            return user;
+            return Task.FromResult(new ActionResult<User>(user));
         }
 
+        /// <summary>
+        /// Log out user
+        /// </summary>
+        /// <returns></returns>
+        ///<response code="200">User has been logged out</response>
         [HttpGet("logout")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> LogoutUserAsync()
         {
             await HttpContext.SignOutAsync();
             return Ok();
         }
 
+        /// <summary>
+        /// Get user by id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>User associated with this id</returns>
+        /// <response code="200">Returns user</response>
+        /// <response code="404">If no user with such id exist</response>
         [HttpGet("profile/{userId}")]
-        public async Task<ActionResult<Shared.Models.User>> GetProfileAsync(int userId)
+        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<User>> GetUserByIdAsync(int userId)
         {
-            var result =  await _databaseService.GetUserById(userId);
-            return (Shared.Models.User) result;
+            var exists = await _databaseService.UserExistsAsync(userId);
+            if (!exists)
+            {
+                return NotFound();
+            }
+
+            var user =  await _databaseService.GetUserById(userId);
+            return (User) user;
         }
     }
 }

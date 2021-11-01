@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Stocks.Server.Models;
 using Stocks.Server.Services;
 using Stocks.Shared.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Stocks.Server.Controllers
 {
+    /// <summary>
+    /// Serves information about tickers
+    /// </summary>
     [Route("api/ticker")]
     [ApiController]
     public class TickerController : ControllerBase
@@ -17,10 +17,15 @@ namespace Stocks.Server.Controllers
         private readonly IDatabaseService _databaseService;
         private readonly ITickerService _tickerService;
 
+        /// <summary>
+        /// Constructs new instance of TickerController
+        /// </summary>
+        /// <param name="databaseService"></param>
+        /// <param name="tickerService"></param>
         public TickerController(IDatabaseService databaseService, ITickerService tickerService)
         {
-            this._databaseService = databaseService;
-            this._tickerService = tickerService;
+            _databaseService = databaseService;
+            _tickerService = tickerService;
         }
 
         /// <summary>
