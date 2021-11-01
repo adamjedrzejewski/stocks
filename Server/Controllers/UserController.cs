@@ -58,10 +58,10 @@ namespace Stocks.Server.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        /// <response code="200">User has been registered</response>
+        /// <response code="201">User has been registered</response>
         /// <response code="409">If user with such username already exist</response>
         [HttpPost("register")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> RegisterUser(User user)
         {
@@ -71,7 +71,7 @@ namespace Stocks.Server.Controllers
             }
 
             await _databaseService.AddUserAsync(user);
-            return Ok();
+            return StatusCode(201);
         }
 
         /// <summary>
@@ -96,13 +96,13 @@ namespace Stocks.Server.Controllers
         /// Log out user
         /// </summary>
         /// <returns></returns>
-        ///<response code="200">User has been logged out</response>
+        ///<response code="204">User has been logged out</response>
         [HttpGet("logout")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> LogoutUserAsync()
         {
             await HttpContext.SignOutAsync();
-            return Ok();
+            return NoContent();
         }
 
     }

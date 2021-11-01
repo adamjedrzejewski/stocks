@@ -62,13 +62,13 @@ namespace Stocks.Server.Controllers
         /// </summary>
         /// <param name="watch"></param>
         /// <returns></returns>
-        /// <response code="200">Watchlist has been updated</response>
+        /// <response code="204">Watchlist has been updated</response>
         [HttpDelete]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> RemoveFromWatchList([FromBody] WatchTicker watch)
         {
             await _databaseService.RemoveFromWatchlistAsync(watch);
-            return StatusCode(200);
+            return NoContent();
         }
 
     }
