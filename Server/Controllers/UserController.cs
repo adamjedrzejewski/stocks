@@ -105,26 +105,5 @@ namespace Stocks.Server.Controllers
             return Ok();
         }
 
-        /// <summary>
-        /// Get user by id
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns>User associated with this id</returns>
-        /// <response code="200">Returns user</response>
-        /// <response code="404">If no user with such id exist</response>
-        [HttpGet("profile/{userId}")]
-        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<User>> GetUserByIdAsync(int userId)
-        {
-            var exists = await _databaseService.UserExistsAsync(userId);
-            if (!exists)
-            {
-                return NotFound();
-            }
-
-            var user =  await _databaseService.GetUserById(userId);
-            return (User) user;
-        }
     }
 }
