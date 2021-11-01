@@ -31,6 +31,7 @@ namespace Stocks.Server.Services
 
         public async Task AddUser(User user)
         {
+            user.Password = PasswordUtility.Encrypt(user.Password);
             _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
         }
@@ -38,6 +39,7 @@ namespace Stocks.Server.Services
         public Task<User> GetLoggedInUserAsync(User user)
         {
             // TODO: password salting
+            user.Password = PasswordUtility.Encrypt(user.Password);
             return _dbContext.Users.Where(u => u.Username == user.Username && u.Password == user.Password).FirstOrDefaultAsync();
         }
 
