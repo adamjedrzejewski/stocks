@@ -16,5 +16,6 @@ namespace Stocks.Server.Services
 
         public Task<Models.DTO.TickerDataPoint[]> GetTickerTimeSeries(string tickername, TimeSeries name);
         public Task UpdateTickerDataPoint(Models.DTO.TickerDataPoint[] points);
+        public Task<bool> TickerExistsAsync(string tickername);
     }
 }

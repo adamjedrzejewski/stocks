@@ -83,6 +83,11 @@ namespace Stocks.Server.Services
             _dbContext.SaveChanges();
         }
 
+        public Task<bool> TickerExistsAsync(string tickername)
+        {
+            return _dbContext.Tickers.AnyAsync(t => t.Name == tickername);
+        }
+
         public async Task UpdateTickerDataPoint(TickerDataPoint[] points)
         {
             foreach (var point in points)
