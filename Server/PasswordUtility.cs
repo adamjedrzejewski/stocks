@@ -7,8 +7,16 @@ using System.Threading.Tasks;
 
 namespace Stocks.Server
 {
+    /// <summary>
+    /// For password hashing
+    /// </summary>
     public class PasswordUtility
     {
+        /// <summary>
+        /// Encrypt string
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns>Encrypted string</returns>
         public static string Encrypt(string password)
         {
             var provider = MD5.Create();

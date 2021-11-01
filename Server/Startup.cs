@@ -13,6 +13,7 @@ using Stocks.Server.Services;
 using System.IO;
 using System.Linq;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 namespace Stocks.Server
 {
     public class Startup
