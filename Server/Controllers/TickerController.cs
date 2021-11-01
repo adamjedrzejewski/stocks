@@ -31,7 +31,7 @@ namespace Stocks.Server.Controllers
         /// <response code="200">Returns ticker time series</response>
         /// <response code="404">If ticker is not in the database</response>
         [HttpGet("{tickername}/daily/adjusted")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TickerTimeSeries), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TickerTimeSeries>> GetTickerDailyAdjustedAsync(string tickername)
         {
@@ -52,7 +52,7 @@ namespace Stocks.Server.Controllers
         /// <response code="200">Returns ticker time series</response>
         /// <response code="404">If ticker is not in the database</response>
         [HttpGet("{tickername}/daily")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TickerTimeSeries), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TickerTimeSeries>> GetTickerDailyAsync(string tickername)
         {
@@ -73,7 +73,7 @@ namespace Stocks.Server.Controllers
         /// <response code="200">Returns ticker time series</response>
         /// <response code="404">If ticker is not in the database</response>
         [HttpGet("{tickername}/weekly/adjusted")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TickerTimeSeries), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TickerTimeSeries>> GetTickerWeeklyAdjustedAsync(string tickername)
         {
@@ -94,7 +94,7 @@ namespace Stocks.Server.Controllers
         /// <response code="200">Returns ticker time series</response>
         /// <response code="404">If ticker is not in the database</response>
         [HttpGet("{tickername}/weekly")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TickerTimeSeries), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TickerTimeSeries>> GetTickerWeeklyAsync(string tickername)
         {
@@ -115,7 +115,7 @@ namespace Stocks.Server.Controllers
         /// <response code="200">Returns ticker time series</response>
         /// <response code="404">If ticker is not in the database</response>
         [HttpGet("{tickername}/monthly/adjusted")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TickerTimeSeries), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TickerTimeSeries>> GetTickerMonthlyAdjustedAsync(string tickername)
         {
@@ -136,7 +136,7 @@ namespace Stocks.Server.Controllers
         /// <response code="200">Returns ticker time series</response>
         /// <response code="404">If ticker is not in the database</response>
         [HttpGet("{tickername}/monthly")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TickerTimeSeries), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TickerTimeSeries>> GetTickerMonthlyAsync(string tickername)
         {

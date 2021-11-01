@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Stocks.Server.Models;
 using Stocks.Server.Services;
+using System.IO;
 using System.Linq;
 
 namespace Stocks.Server
@@ -42,6 +43,8 @@ namespace Stocks.Server
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Stock API", Version = "v1" });
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, "Stocks.Server.xml");
+                c.IncludeXmlComments(filePath);
             });
 
             services.AddAuthentication(options =>
