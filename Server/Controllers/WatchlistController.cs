@@ -53,7 +53,7 @@ namespace Stocks.Server.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> AddToWatchList([FromBody] WatchTicker watch)
         {
-            await _databaseService.AddToWatchlist(watch);
+            await _databaseService.AddToWatchlistAsync(watch);
             return StatusCode(201);
         }
 
@@ -67,7 +67,7 @@ namespace Stocks.Server.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> RemoveFromWatchList([FromBody] WatchTicker watch)
         {
-            await _databaseService.RemoveFromWatchlist(watch);
+            await _databaseService.RemoveFromWatchlistAsync(watch);
             return StatusCode(200);
         }
 

@@ -70,7 +70,7 @@ namespace Stocks.Server.Controllers
                 return StatusCode(409);
             }
 
-            await _databaseService.AddUser(user);
+            await _databaseService.AddUserAsync(user);
             return Ok();
         }
 

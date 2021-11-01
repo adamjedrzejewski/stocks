@@ -11,12 +11,21 @@ namespace Stocks.Server.Services
 {
 
 #nullable enable
+    /// <summary>
+    /// Ticker serivce for Alpha Vantage
+    /// </summary>
     public class AlphaVantageTickerService : ITickerService
     {
         private readonly IDatabaseService _databaseService;
         private readonly HttpClient _httpClient;
         private readonly String _apiKey;
 
+        /// <summary>
+        /// Construct new instance of AlphaVantageTickerService
+        /// </summary>
+        /// <param name="databaseService"></param>
+        /// <param name="httpClient"></param>
+        /// <param name="config"></param>
         public AlphaVantageTickerService(IDatabaseService databaseService, HttpClient httpClient, IConfiguration config)
         {
             this._databaseService = databaseService;
@@ -24,31 +33,61 @@ namespace Stocks.Server.Services
             this._apiKey = config["AlphaVantageServiceApiKey"];
         }
 
+        /// <summary>
+        /// Get ticker daily adjusted time series
+        /// </summary>
+        /// <param name="tickername"></param>
+        /// <returns>Ticker daily adjusted time series</returns>
         public async Task<Shared.Models.TickerTimeSeries> GetTickerDailyAdjustedAsync(string tickername)
         {
             return await GetTickerTimeSeriesAsync<TickerInfoDailyAdjusted>(TimeSeries.DAILY_ADJUSTED, tickername);
         }
 
+        /// <summary>
+        /// Get daily ticker time series
+        /// </summary>
+        /// <param name="tickername"></param>
+        /// <returns>Ticker daily time series</returns>
         public async Task<Shared.Models.TickerTimeSeries> GetTickerDailyAsync(string tickername)
         {
             return await GetTickerTimeSeriesAsync<TickerInfoDaily>(TimeSeries.DAILY, tickername);
         }
 
+        /// <summary>
+        /// Get ticker monthly adjusted time series
+        /// </summary>
+        /// <param name="tickername"></param>
+        /// <returns>Ticker monthly adjusted time series</returns>
         public async Task<Shared.Models.TickerTimeSeries> GetTickerMonthlyAdjustedAsync(string tickername)
         {
             return await GetTickerTimeSeriesAsync<TickerInfoMonthlyAdjusted>(TimeSeries.MONTHLY_ADJUSTED, tickername);
         }
 
+        /// <summary>
+        /// Get ticker monthly time series
+        /// </summary>
+        /// <param name="tickername"></param>
+        /// <returns>Ticker monthly time series</returns>
         public async Task<Shared.Models.TickerTimeSeries> GetTickerMonthlyAsync(string tickername)
         {
             return await GetTickerTimeSeriesAsync<TickerInfoMonthly>(TimeSeries.MONTHLY, tickername);
         }
 
+        /// <summary>
+        /// Get ticker weekly adjusted time series
+        /// </summary>
+        /// <param name="tickername"></param>
+        /// <returns>Ticker weekly adjusted time series</returns>
         public async Task<Shared.Models.TickerTimeSeries> GetTickerWeeklyAdjustedAsync(string tickername)
         {
             return await GetTickerTimeSeriesAsync<TickerInfoWeeklyAdjusted>(TimeSeries.WEEKLY_ADJUSTED, tickername);
         }
 
+        /// <summary>
+        /// Get ticker weekly time series
+        /// </summary>
+        /// <param name="tickername"></param>
+        /// <returns>Ticker weekly time series</returns>
         public async Task<Shared.Models.TickerTimeSeries> GetTickerWeeklyAsync(string tickername)
         {
             return await GetTickerTimeSeriesAsync<TickerInfoWeekly>(TimeSeries.WEEKLY, tickername);
@@ -57,8 +96,11 @@ namespace Stocks.Server.Services
         private async Task<Shared.Models.TickerTimeSeries> GetTickerTimeSeriesAsync<T>(TimeSeries series, string tickername) where T : TickerInfo
         {
             var tickerSeries = await GetTickerTimeSeriesFromAPIAsync<T>(series, tickername);
+
+            // if the api call fails use data stored in database instead
             if (tickerSeries != null)
             {
+                // will be used in future, when api doesn't deliver
                 await SaveSeriesToDatabaseAsync(tickerSeries, series, tickername);
                 return tickerSeries;
             }
@@ -81,12 +123,12 @@ namespace Stocks.Server.Services
                 TickerName = tickername,
                 SeriesName = series.SeriesStringName()
             }).ToArray();
-            await _databaseService.UpdateTickerDataPoint(dtoSeries);
+            await _databaseService.UpdateTickerDataPointAsync(dtoSeries);
         }
 
         private async Task<Shared.Models.TickerTimeSeries> GetSeriesFromDatabaseAsync(TimeSeries series, string tickername)
         {
-            var dtoSeries = await _databaseService.GetTickerTimeSeries(tickername, series);
+            var dtoSeries = await _databaseService.GetTickerTimeSeriesAsync(tickername, series);
             var seriesList = dtoSeries.Select(e => (Shared.Models.TickerDataPoint)e).ToList();
             return new Shared.Models.TickerTimeSeries()
             {
@@ -94,6 +136,7 @@ namespace Stocks.Server.Services
             };
         }
 
+        // try to get data from api
         private async Task<Shared.Models.TickerTimeSeries?> GetTickerTimeSeriesFromAPIAsync<T>(TimeSeries series, string tickername) where T : TickerInfo
         {
             try
@@ -103,7 +146,7 @@ namespace Stocks.Server.Services
                 var tickerInfo = await _httpClient.GetFromJsonAsync<T>(QUERY_URL);
                 return tickerInfo?.ToSharedTickerTimeSeries();
             }
-            catch (Exception)
+            catch (Exception) // api may not answer with correct schema, limits per unit of time
             {
                 return null;
             }

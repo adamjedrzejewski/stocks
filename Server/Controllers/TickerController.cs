@@ -163,7 +163,7 @@ namespace Stocks.Server.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<Ticker[]>> GetAllTickersAsync()
         {
-            var tickers = await _databaseService.GetTickers();
+            var tickers = await _databaseService.GetTickersAsync();
             return tickers.Select(t => (Ticker) t).ToArray();
         }
     }
