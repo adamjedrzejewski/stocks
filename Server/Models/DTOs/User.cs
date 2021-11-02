@@ -25,7 +25,6 @@ namespace Stocks.Server.Models.DTO
         public static implicit operator User(Shared.Models.User user)
             => new User
             {
-                UserId = user.UserId,
                 Username = user.Username,
                 Password = user.Password
             };
