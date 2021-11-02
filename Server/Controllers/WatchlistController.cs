@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Stocks.Client.Pages;
 using Stocks.Server.Services;
 using Stocks.Shared.Models;
 using System;
