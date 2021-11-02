@@ -60,7 +60,7 @@ namespace Stocks.Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseWebAssemblyDebugging();
+                app.UseWebAssemblyDebugging();
             }
             else
             {
@@ -70,8 +70,8 @@ namespace Stocks.Server
             }
 
             app.UseHttpsRedirection();
-            //app.UseBlazorFrameworkFiles();
-            //app.UseStaticFiles();
+            app.UseBlazorFrameworkFiles();
+            app.UseStaticFiles();
 
             app.UseSwagger();
 
@@ -89,7 +89,7 @@ namespace Stocks.Server
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapRazorPages();
+                endpoints.MapRazorPages();
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
             });
