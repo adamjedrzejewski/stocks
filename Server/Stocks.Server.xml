@@ -1,0 +1,456 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Stocks.Server</name>
+    </assembly>
+    <members>
+        <member name="T:Stocks.Server.Controllers.TickerController">
+            <summary>
+            Serves information about tickers
+            </summary>
+        </member>
+        <member name="M:Stocks.Server.Controllers.TickerController.#ctor(Stocks.Server.Services.IDatabaseService,Stocks.Server.Services.ITickerService)">
+            <summary>
+            Constructs new instance of TickerController
+            </summary>
+            <param name="databaseService"></param>
+            <param name="tickerService"></param>
+        </member>
+        <member name="M:Stocks.Server.Controllers.TickerController.GetTickerDailyAdjustedAsync(System.String)">
+            <summary>
+            Get ticker daily adjusted time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Daily time series for ticker</returns>
+            <response code="200">Returns ticker time series</response>
+            <response code="404">If ticker is not in the database</response>
+        </member>
+        <member name="M:Stocks.Server.Controllers.TickerController.GetTickerDailyAsync(System.String)">
+            <summary>
+            Get ticker daily time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Daily adjusted time series for ticker</returns>
+            <response code="200">Returns ticker time series</response>
+            <response code="404">If ticker is not in the database</response>
+        </member>
+        <member name="M:Stocks.Server.Controllers.TickerController.GetTickerWeeklyAdjustedAsync(System.String)">
+            <summary>
+            Get ticker weekly adjusted time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Weekly adjusted time series for ticker</returns>
+            <response code="200">Returns ticker time series</response>
+            <response code="404">If ticker is not in the database</response>
+        </member>
+        <member name="M:Stocks.Server.Controllers.TickerController.GetTickerWeeklyAsync(System.String)">
+            <summary>
+            Get ticker weekly time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Weekly time series for ticker</returns>
+            <response code="200">Returns ticker time series</response>
+            <response code="404">If ticker is not in the database</response>
+        </member>
+        <member name="M:Stocks.Server.Controllers.TickerController.GetTickerMonthlyAdjustedAsync(System.String)">
+            <summary>
+            Get ticker monthly adjusted time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Monthly adjusted time series for ticker</returns>
+            <response code="200">Returns ticker time series</response>
+            <response code="404">If ticker is not in the database</response>
+        </member>
+        <member name="M:Stocks.Server.Controllers.TickerController.GetTickerMonthlyAsync(System.String)">
+            <summary>
+            Get ticker monthly time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Monthly time series for ticker</returns>
+            <response code="200">Returns ticker time series</response>
+            <response code="404">If ticker is not in the database</response>
+        </member>
+        <member name="M:Stocks.Server.Controllers.TickerController.GetAllTickersAsync">
+            <summary>
+            Get ticker list
+            </summary>
+            <returns>A list of all available tickers</returns>
+            <response code="200">Returns list of tickers</response>
+        </member>
+        <member name="T:Stocks.Server.Controllers.UserController">
+            <summary>
+            Serves information about user
+            </summary>
+        </member>
+        <member name="M:Stocks.Server.Controllers.UserController.#ctor(Stocks.Server.Services.IDatabaseService)">
+            <summary>
+            Constructs new instance of UserController
+            </summary>
+            <param name="databaseService"></param>
+        </member>
+        <member name="M:Stocks.Server.Controllers.UserController.LoginUserAsync(Stocks.Shared.Models.User)">
+            <summary>
+            Login user
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+            <response code="200">User has been logged in</response>
+        </member>
+        <member name="M:Stocks.Server.Controllers.UserController.RegisterUser(Stocks.Shared.Models.User)">
+            <summary>
+            Register new user
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+            <response code="201">User has been registered</response>
+            <response code="409">If user with such username already exist</response>
+        </member>
+        <member name="M:Stocks.Server.Controllers.UserController.GetCurrentUserAsync">
+            <summary>
+            Get current user
+            </summary>
+            <returns>Current user</returns>
+            <response code="200">Current user</response>
+        </member>
+        <member name="M:Stocks.Server.Controllers.UserController.LogoutUserAsync">
+             <summary>
+             Log out user
+             </summary>
+             <returns></returns>
+            <response code="204">User has been logged out</response>
+        </member>
+        <member name="T:Stocks.Server.Controllers.WatchlistController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Stocks.Server.Controllers.WatchlistController.#ctor(Stocks.Server.Services.IDatabaseService)">
+            <summary>
+            
+            </summary>
+            <param name="databaseService"></param>
+        </member>
+        <member name="M:Stocks.Server.Controllers.WatchlistController.GetUserWatchList(System.Int32)">
+            <summary>
+            Returns watchlist for given user id
+            </summary>
+            <param name="userId"></param>
+            <returns>List of tickers that are on users watchlist</returns>
+            <response code="200">Returns the list</response>
+        </member>
+        <member name="M:Stocks.Server.Controllers.WatchlistController.AddToWatchList(Stocks.Shared.Models.WatchTicker)">
+            <summary>
+            Add entry to user's watchlist
+            </summary>
+            <param name="watch"></param>
+            <returns></returns>
+            <response code="201">Watchlist has been updated</response>
+        </member>
+        <member name="M:Stocks.Server.Controllers.WatchlistController.RemoveFromWatchList(Stocks.Shared.Models.WatchTicker)">
+            <summary>
+            Remove entry from user's watchlist
+            </summary>
+            <param name="watch"></param>
+            <returns></returns>
+            <response code="204">Watchlist has been updated</response>
+        </member>
+        <member name="T:Stocks.Server.PasswordUtility">
+            <summary>
+            For password hashing
+            </summary>
+        </member>
+        <member name="M:Stocks.Server.PasswordUtility.Encrypt(System.String)">
+            <summary>
+            Encrypt string
+            </summary>
+            <param name="password"></param>
+            <returns>Encrypted string</returns>
+        </member>
+        <member name="T:Stocks.Server.Services.AlphaVantageTickerService">
+            <summary>
+            Ticker serivce for Alpha Vantage
+            </summary>
+        </member>
+        <member name="M:Stocks.Server.Services.AlphaVantageTickerService.#ctor(Stocks.Server.Services.IDatabaseService,System.Net.Http.HttpClient,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Construct new instance of AlphaVantageTickerService
+            </summary>
+            <param name="databaseService"></param>
+            <param name="httpClient"></param>
+            <param name="config"></param>
+        </member>
+        <member name="M:Stocks.Server.Services.AlphaVantageTickerService.GetTickerDailyAdjustedAsync(System.String)">
+            <summary>
+            Get ticker daily adjusted time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Ticker daily adjusted time series</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.AlphaVantageTickerService.GetTickerDailyAsync(System.String)">
+            <summary>
+            Get daily ticker time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Ticker daily time series</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.AlphaVantageTickerService.GetTickerMonthlyAdjustedAsync(System.String)">
+            <summary>
+            Get ticker monthly adjusted time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Ticker monthly adjusted time series</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.AlphaVantageTickerService.GetTickerMonthlyAsync(System.String)">
+            <summary>
+            Get ticker monthly time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Ticker monthly time series</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.AlphaVantageTickerService.GetTickerWeeklyAdjustedAsync(System.String)">
+            <summary>
+            Get ticker weekly adjusted time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Ticker weekly adjusted time series</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.AlphaVantageTickerService.GetTickerWeeklyAsync(System.String)">
+            <summary>
+            Get ticker weekly time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Ticker weekly time series</returns>
+        </member>
+        <member name="T:Stocks.Server.Services.IDatabaseService">
+            <summary>
+            Interface for communitaction with database
+            </summary>
+        </member>
+        <member name="M:Stocks.Server.Services.IDatabaseService.GetLoggedInUserAsync(Stocks.Server.Models.DTO.User)">
+            <summary>
+            Get logged in user
+            </summary>
+            <param name="user"></param>
+            <returns>logged in user</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.IDatabaseService.GetUserByIdAsync(System.Int32)">
+            <summary>
+            Get user by id
+            </summary>
+            <param name="userID"></param>
+            <returns>User with specified id</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.IDatabaseService.UsernameExistsAsync(Stocks.Server.Models.DTO.User)">
+            <summary>
+            Check if user exists by username
+            </summary>
+            <param name="user"></param>
+            <returns>True if user exists false otherwise</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.IDatabaseService.UserExistsAsync(System.Int32)">
+            <summary>
+            Check if user exists by id
+            </summary>
+            <param name="userid"></param>
+            <returns>True if user exists false otherwise</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.IDatabaseService.AddUserAsync(Stocks.Server.Models.DTO.User)">
+            <summary>
+            Add new user
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Stocks.Server.Services.IDatabaseService.GetTickersAsync">
+            <summary>
+            Get all tickers in the database
+            </summary>
+            <returns>Array of tickers</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.IDatabaseService.GetUserWatchlistAsync(System.Int32)">
+            <summary>
+            Get user's watchlist
+            </summary>
+            <param name="userId"></param>
+            <returns>Array of tickers that are on user's watchlist</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.IDatabaseService.AddToWatchlistAsync(Stocks.Server.Models.DTO.WatchTicker)">
+            <summary>
+            Add entry to watchlist
+            </summary>
+            <param name="watch"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Stocks.Server.Services.IDatabaseService.RemoveFromWatchlistAsync(Stocks.Server.Models.DTO.WatchTicker)">
+            <summary>
+            Remove entry from watchlist
+            </summary>
+            <param name="watch"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Stocks.Server.Services.IDatabaseService.GetTickerTimeSeriesAsync(System.String,Stocks.Server.Models.TimeSeries)">
+            <summary>
+            Get datapoints for ticker of time series
+            </summary>
+            <param name="tickername"></param>
+            <param name="name"></param>
+            <returns>Array of datapoints for given ticker</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.IDatabaseService.UpdateTickerDataPointAsync(Stocks.Server.Models.DTO.TickerDataPoint[])">
+            <summary>
+            Passed as array, those entries that are not yet in the database are inserted
+            </summary>
+            <param name="points"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Stocks.Server.Services.IDatabaseService.TickerExistsAsync(System.String)">
+            <summary>
+            Check if ticker exists
+            </summary>
+            <param name="tickername"></param>
+            <returns>true if ticker exists false otherwise</returns>
+        </member>
+        <member name="T:Stocks.Server.Services.ITickerService">
+            <summary>
+            Ticker service
+            </summary>
+        </member>
+        <member name="M:Stocks.Server.Services.ITickerService.GetTickerDailyAdjustedAsync(System.String)">
+            <summary>
+            Get ticker daily adjusted time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Ticker daily adjusted time series</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.ITickerService.GetTickerDailyAsync(System.String)">
+            <summary>
+            Get daily ticker time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Ticker daily time series</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.ITickerService.GetTickerWeeklyAdjustedAsync(System.String)">
+            <summary>
+            Get ticker weekly adjusted time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Ticker weekly adjusted time series</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.ITickerService.GetTickerWeeklyAsync(System.String)">
+            <summary>
+            Get ticker weekly time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Ticker weekly time series</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.ITickerService.GetTickerMonthlyAdjustedAsync(System.String)">
+            <summary>
+            Get ticker monthly adjusted time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Ticker monthly adjusted time series</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.ITickerService.GetTickerMonthlyAsync(System.String)">
+            <summary>
+            Get ticker monthly time series
+            </summary>
+            <param name="tickername"></param>
+            <returns>Ticker monthly time series</returns>
+        </member>
+        <member name="T:Stocks.Server.Services.SqlServerDatabaseService">
+            <summary>
+            Database service for Microsoft SQL Server
+            </summary>
+        </member>
+        <member name="M:Stocks.Server.Services.SqlServerDatabaseService.#ctor(Stocks.Server.Models.MainDbContext)">
+            <summary>
+            Construct new instance of SqlServerDatabaseService
+            </summary>
+            <param name="dbContext"></param>
+        </member>
+        <member name="M:Stocks.Server.Services.SqlServerDatabaseService.AddToWatchlistAsync(Stocks.Server.Models.DTO.WatchTicker)">
+            <summary>
+            Add entry to watchlist
+            </summary>
+            <param name="watch"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Stocks.Server.Services.SqlServerDatabaseService.AddUserAsync(Stocks.Server.Models.DTO.User)">
+            <summary>
+            Add new user
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Stocks.Server.Services.SqlServerDatabaseService.GetLoggedInUserAsync(Stocks.Server.Models.DTO.User)">
+            <summary>
+            Get logged in user
+            </summary>
+            <param name="user"></param>
+            <returns>logged in user</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.SqlServerDatabaseService.GetTickersAsync">
+            <summary>
+            Get all tickers in the database
+            </summary>
+            <returns>Array of tickers</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.SqlServerDatabaseService.GetTickerTimeSeriesAsync(System.String,Stocks.Server.Models.TimeSeries)">
+            <summary>
+            Get datapoints for ticker of time series
+            </summary>
+            <param name="tickername"></param>
+            <param name="series"></param>
+            <returns>Array of datapoints for given ticker</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.SqlServerDatabaseService.GetUserByIdAsync(System.Int32)">
+            <summary>
+            Get user by id
+            </summary>
+            <param name="userID"></param>
+            <returns>User with specified id</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.SqlServerDatabaseService.GetUserWatchlistAsync(System.Int32)">
+            <summary>
+            Get user's watchlist
+            </summary>
+            <param name="userId"></param>
+            <returns>Array of tickers that are on user's watchlist</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.SqlServerDatabaseService.RemoveFromWatchlistAsync(Stocks.Server.Models.DTO.WatchTicker)">
+            <summary>
+            Remove entry from watchlist
+            </summary>
+            <param name="watch"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Stocks.Server.Services.SqlServerDatabaseService.TickerExistsAsync(System.String)">
+            <summary>
+            Check if ticker exists
+            </summary>
+            <param name="tickername"></param>
+            <returns>true if ticker exists false otherwise</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.SqlServerDatabaseService.UpdateTickerDataPointAsync(Stocks.Server.Models.DTO.TickerDataPoint[])">
+            <summary>
+            Passed as array, those entries that are not yet in the database are inserted
+            </summary>
+            <param name="points"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Stocks.Server.Services.SqlServerDatabaseService.UserExistsAsync(System.Int32)">
+            <summary>
+            Check if user exists by id
+            </summary>
+            <param name="userid"></param>
+            <returns>True if user exists false otherwise</returns>
+        </member>
+        <member name="M:Stocks.Server.Services.SqlServerDatabaseService.UsernameExistsAsync(Stocks.Server.Models.DTO.User)">
+            <summary>
+            Check if user exists by username
+            </summary>
+            <param name="user"></param>
+            <returns>True if user exists false otherwise</returns>
+        </member>
+    </members>
+</doc>
