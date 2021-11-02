@@ -95,6 +95,7 @@
             <param name="user"></param>
             <returns></returns>
             <response code="200">User has been logged in</response>
+            <response code="400">If posted user schema is invalid</response>
         </member>
         <member name="M:Stocks.Server.Controllers.UserController.RegisterUser(Stocks.Shared.Models.User)">
             <summary>
@@ -103,6 +104,7 @@
             <param name="user"></param>
             <returns></returns>
             <response code="201">User has been registered</response>
+            <response code="400">If posted user schema is invalid</response>
             <response code="409">If user with such username already exist</response>
         </member>
         <member name="M:Stocks.Server.Controllers.UserController.GetCurrentUserAsync">
@@ -145,6 +147,7 @@
             <param name="watch"></param>
             <returns></returns>
             <response code="201">Watchlist has been updated</response>
+            <response code="400">If posted watchlist schema is invalid</response>
         </member>
         <member name="M:Stocks.Server.Controllers.WatchlistController.RemoveFromWatchList(Stocks.Shared.Models.WatchTicker)">
             <summary>

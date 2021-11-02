@@ -35,10 +35,17 @@ namespace Stocks.Server.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         /// <response code="200">User has been logged in</response>
+        /// <response code="400">If posted user schema is invalid</response>
         [HttpPost("login")]
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<User>> LoginUserAsync(User user)
         {
+            if (user.Username == null || user.Password == null)
+            {
+                return BadRequest();
+            }
+
             var loggedInUser = await _databaseService.GetLoggedInUserAsync(user);
             if (loggedInUser != null)
             {
@@ -59,12 +66,19 @@ namespace Stocks.Server.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         /// <response code="201">User has been registered</response>
+        /// <response code="400">If posted user schema is invalid</response>
         /// <response code="409">If user with such username already exist</response>
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> RegisterUser(User user)
         {
+            if (user.Username == null || user.Password == null)
+            {
+                return BadRequest();
+            }
+
             if (await _databaseService.UsernameExistsAsync(user))
             {
                 return StatusCode(409);

@@ -49,10 +49,17 @@ namespace Stocks.Server.Controllers
         /// <param name="watch"></param>
         /// <returns></returns>
         /// <response code="201">Watchlist has been updated</response>
+        /// <response code="400">If posted watchlist schema is invalid</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddToWatchList([FromBody] WatchTicker watch)
         {
+            if (watch.TickerName == null)
+            {
+                return BadRequest();
+            }
+
             await _databaseService.AddToWatchlistAsync(watch);
             return StatusCode(201);
         }
