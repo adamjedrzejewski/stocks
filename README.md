@@ -1,5 +1,13 @@
 # Stocks
-<img src="https://img.shields.io/github/license/adamjedrzejewski/stocks">
+<p align="left">
+  <a href="https://github.com/adamjedrzejewski/stocks/actions/workflows/adajstocks.yml">
+    <img src="https://img.shields.io/github/workflow/status/adamjedrzejewski/stocks/Build%20and%20deploy%20.NET%20Core%20app%20to%20Windows%20WebApp%20adajstocks?style=for-the-badge">
+  </a>
+  <a href="https://github.com/adamjedrzejewski/stocks/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/adamjedrzejewski/stocks?style=for-the-badge">
+  </a>
+</p>
+Browse tickers and their movement in price.
 
 <!-- About -->
 ## About the project
@@ -8,13 +16,19 @@
 ### Prerequisites
 You will need [.NET 5](https://dotnet.microsoft.com/download/dotnet/5.0) and running instance of [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads).
 ### Installation
-Clone the repository
+1. Clone the repository
 ```
 git clone https://github.com/adamjedrzejewski/stocks.git
 ```
-Restore dependencies
+2. Restore dependencies
 ```
+dotnet restore
 ```
+3. Build
+```
+dotnet build --configuration Release
+```
+
 ### Configuration
 Put configuration options in _Server/appsettings.json_, consider using secrets if for other purposes than testing.<br>
 You will need:
@@ -32,14 +46,15 @@ You will need:
 
 ### Running
 ```
+dotnet run --configuration Release # inside Server directory
 ```
 
 <!-- Built with -->
 ## Built with
-* [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)
 * [ASP.NET Core](https://github.com/dotnet/aspnetcore)
 * [Entity Framework Core](https://github.com/dotnet/efcore)
 * [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-2019)
+* [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)
 * [Alpha Vantage Stock API](https://www.alphavantage.co/)
 
 <!-- LICENSE -->
