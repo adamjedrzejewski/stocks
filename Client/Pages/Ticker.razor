@@ -8,9 +8,9 @@
 @if (_seriesOk)
 {
     <h3>Ticker: @TickerName
-    @foreach (var (name, redirect) in redirectButtons)
+    @foreach (var (name, redirect, id) in redirectButtons)
     {
-        <button style="margin: 5px 10px 5px 10px" class="btn btn-info" @onclick="() => ButtonRedirect(redirect)">@name</button>
+        <button id="@id" style="margin: 5px 10px 5px 10px" class="btn btn-info" @onclick="() => ButtonRedirect(redirect)">@name</button>
     }
     </h3>
     <Stocks.Client.Components.OHLCChart TickerTimeSeries="TickerTimeSeries" />
@@ -34,14 +34,14 @@ else
 
     private bool _seriesOk = false;
     private List<string> _correctSeries = new List<string> { "daily", "weekly", "monthly" };
-    private List<(string name, string redirect)> redirectButtons = new List<(string, string)>
+    private List<(string name, string redirect, string id)> redirectButtons = new List<(string, string, string)>
     {
-        ("Daily", "daily"),
-        ("Daily Adjusted", "daily/adjusted"),
-        ("Weekly", "weekly"),
-        ("Weekly Adjusted", "weekly/adjusted"),
-        ("Monthly", "monthly"),
-        ("Monthly Adjusted", "monthly/adjusted")
+        ("Daily", "daily", "redirect-daily"),
+        ("Daily Adjusted", "daily/adjusted", "redirect-daily-adjusted"),
+        ("Weekly", "weekly", "redirect-weekly"),
+        ("Weekly Adjusted", "weekly/adjusted", "redirect-weekly-adjusted"),
+        ("Monthly", "monthly", "redirect-monthly"),
+        ("Monthly Adjusted", "monthly/adjusted", "redirect-monthly-adjusted")
     };
 
     protected override async Task OnInitializedAsync()
