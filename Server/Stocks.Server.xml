@@ -157,6 +157,7 @@
             <param name="watch"></param>
             <returns></returns>
             <response code="204">Watchlist has been updated</response>
+            <response code="400">If posted watchlist schema is invalid</response>
         </member>
         <member name="T:Stocks.Server.PasswordUtility">
             <summary>

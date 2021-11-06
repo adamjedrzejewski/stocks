@@ -39,7 +39,7 @@ namespace Stocks.Server.Controllers
         {
             var tickers = await _databaseService.GetUserWatchlistAsync(userId);
             var tickersArray = tickers.Select(t => (Shared.Models.Ticker) t).ToArray();
-            return tickersArray;
+            return Ok(tickersArray);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Stocks.Server.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddToWatchList([FromBody] WatchTicker watch)
+        public async Task<ActionResult> AddToWatchList([FromBody] WatchTicker watch)
         {
             if (watch.TickerName == null)
             {
@@ -69,10 +69,17 @@ namespace Stocks.Server.Controllers
         /// <param name="watch"></param>
         /// <returns></returns>
         /// <response code="204">Watchlist has been updated</response>
+        /// <response code="400">If posted watchlist schema is invalid</response>
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RemoveFromWatchList([FromBody] WatchTicker watch)
         {
+            if (watch.TickerName == null)
+            {
+                return BadRequest();
+            }
+
             await _databaseService.RemoveFromWatchlistAsync(watch);
             return NoContent();
         }
