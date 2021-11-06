@@ -46,7 +46,8 @@ namespace Stocks.Server.Controllers
                 return NotFound();
             }
 
-            return await _tickerService.GetTickerDailyAdjustedAsync(tickername);
+            var result = await _tickerService.GetTickerDailyAdjustedAsync(tickername);
+            return Ok(result);
         }
 
         /// <summary>
@@ -67,7 +68,8 @@ namespace Stocks.Server.Controllers
                 return NotFound();
             }
 
-            return await _tickerService.GetTickerDailyAsync(tickername);
+            var result = await _tickerService.GetTickerDailyAsync(tickername);
+            return Ok(result);
         }
 
         /// <summary>
@@ -88,7 +90,8 @@ namespace Stocks.Server.Controllers
                 return NotFound();
             }
 
-            return await _tickerService.GetTickerWeeklyAdjustedAsync(tickername);
+            var result = await _tickerService.GetTickerWeeklyAdjustedAsync(tickername);
+            return Ok(result);
         }
 
         /// <summary>
@@ -109,7 +112,8 @@ namespace Stocks.Server.Controllers
                 return NotFound();
             }
 
-            return await _tickerService.GetTickerWeeklyAsync(tickername);
+            var result = await _tickerService.GetTickerWeeklyAsync(tickername);
+            return Ok(result);
         }
 
         /// <summary>
@@ -130,7 +134,8 @@ namespace Stocks.Server.Controllers
                 return NotFound();
             }
 
-            return await _tickerService.GetTickerMonthlyAdjustedAsync(tickername);
+            var result = await _tickerService.GetTickerMonthlyAdjustedAsync(tickername);
+            return Ok(result);
         }
 
         /// <summary>
@@ -151,7 +156,8 @@ namespace Stocks.Server.Controllers
                 return NotFound();
             }
 
-            return await _tickerService.GetTickerMonthlyAsync(tickername);
+            var result = await _tickerService.GetTickerMonthlyAsync(tickername);
+            return Ok(result);
         }
 
         /// <summary>
@@ -164,7 +170,8 @@ namespace Stocks.Server.Controllers
         public async Task<ActionResult<Ticker[]>> GetAllTickersAsync()
         {
             var tickers = await _databaseService.GetTickersAsync();
-            return tickers.Select(t => (Ticker) t).ToArray();
+            var result = tickers.Select(t => (Ticker) t).ToArray();
+            return Ok(result);
         }
     }
 }
