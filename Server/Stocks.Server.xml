@@ -96,8 +96,9 @@
             <returns></returns>
             <response code="200">User has been logged in</response>
             <response code="400">If posted user schema is invalid</response>
+            <response code="400">If posted user is not registered</response>
         </member>
-        <member name="M:Stocks.Server.Controllers.UserController.RegisterUser(Stocks.Shared.Models.User)">
+        <member name="M:Stocks.Server.Controllers.UserController.RegisterUserAsync(Stocks.Shared.Models.User)">
             <summary>
             Register new user
             </summary>

@@ -36,6 +36,7 @@ namespace Stocks.Server.Controllers
         /// <returns></returns>
         /// <response code="200">User has been logged in</response>
         /// <response code="400">If posted user schema is invalid</response>
+        /// <response code="400">If posted user is not registered</response>
         [HttpPost("login")]
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -55,9 +56,12 @@ namespace Stocks.Server.Controllers
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                 await HttpContext.SignInAsync(claimsPrincipal);
                 
+                return Ok((User) loggedInUser);
             }
-
-            return (User) loggedInUser;
+            else
+            {
+                return BadRequest();
+            }
         }
 
         /// <summary>
@@ -72,7 +76,7 @@ namespace Stocks.Server.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<IActionResult> RegisterUser(User user)
+        public async Task<IActionResult> RegisterUserAsync(User user)
         {
             if (user.Username == null || user.Password == null)
             {
@@ -81,7 +85,7 @@ namespace Stocks.Server.Controllers
 
             if (await _databaseService.UsernameExistsAsync(user))
             {
-                return StatusCode(409);
+                return Conflict();
             }
 
             await _databaseService.AddUserAsync(user);
