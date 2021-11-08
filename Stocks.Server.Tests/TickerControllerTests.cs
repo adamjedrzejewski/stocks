@@ -21,8 +21,8 @@ namespace Stocks.Server.Tests
             var databaseService = A.Fake<IDatabaseService>();
             var tickerService = A.Fake<ITickerService>();
 
-            A.CallTo(() => databaseService.TickerExistsAsync(tickername)).Returns(Task.FromResult(true));
-            A.CallTo(() => tickerService.GetTickerDailyAdjustedAsync(tickername)).Returns(Task.FromResult(fakeTickerTimeSeries));
+            A.CallTo(() => databaseService.TickerExistsAsync(A<string>._)).Returns(Task.FromResult(true));
+            A.CallTo(() => tickerService.GetTickerDailyAdjustedAsync(A<string>._)).Returns(Task.FromResult(fakeTickerTimeSeries));
             var controller = new TickerController(databaseService, tickerService);
 
             // Act
@@ -43,8 +43,8 @@ namespace Stocks.Server.Tests
             var databaseService = A.Fake<IDatabaseService>();
             var tickerService = A.Fake<ITickerService>();
 
-            A.CallTo(() => databaseService.TickerExistsAsync(tickername)).Returns(Task.FromResult(false));
-            A.CallTo(() => tickerService.GetTickerDailyAdjustedAsync(tickername)).Returns(Task.FromResult(fakeTickerTimeSeries));
+            A.CallTo(() => databaseService.TickerExistsAsync(A<string>._)).Returns(Task.FromResult(false));
+            A.CallTo(() => tickerService.GetTickerDailyAdjustedAsync(A<string>._)).Returns(Task.FromResult(fakeTickerTimeSeries));
             var controller = new TickerController(databaseService, tickerService);
 
             // Act
@@ -63,8 +63,8 @@ namespace Stocks.Server.Tests
             var databaseService = A.Fake<IDatabaseService>();
             var tickerService = A.Fake<ITickerService>();
 
-            A.CallTo(() => databaseService.TickerExistsAsync(tickername)).Returns(Task.FromResult(true));
-            A.CallTo(() => tickerService.GetTickerDailyAsync(tickername)).Returns(Task.FromResult(fakeTickerTimeSeries));
+            A.CallTo(() => databaseService.TickerExistsAsync(A<string>._)).Returns(Task.FromResult(true));
+            A.CallTo(() => tickerService.GetTickerDailyAsync(A<string>._)).Returns(Task.FromResult(fakeTickerTimeSeries));
             var controller = new TickerController(databaseService, tickerService);
 
             // Act
@@ -85,8 +85,8 @@ namespace Stocks.Server.Tests
             var databaseService = A.Fake<IDatabaseService>();
             var tickerService = A.Fake<ITickerService>();
 
-            A.CallTo(() => databaseService.TickerExistsAsync(tickername)).Returns(Task.FromResult(false));
-            A.CallTo(() => tickerService.GetTickerDailyAsync(tickername)).Returns(Task.FromResult(fakeTickerTimeSeries));
+            A.CallTo(() => databaseService.TickerExistsAsync(A<string>._)).Returns(Task.FromResult(false));
+            A.CallTo(() => tickerService.GetTickerDailyAsync(A<string>._)).Returns(Task.FromResult(fakeTickerTimeSeries));
             var controller = new TickerController(databaseService, tickerService);
 
             // Act
@@ -105,8 +105,8 @@ namespace Stocks.Server.Tests
             var databaseService = A.Fake<IDatabaseService>();
             var tickerService = A.Fake<ITickerService>();
 
-            A.CallTo(() => databaseService.TickerExistsAsync(tickername)).Returns(Task.FromResult(true));
-            A.CallTo(() => tickerService.GetTickerWeeklyAdjustedAsync(tickername)).Returns(Task.FromResult(fakeTickerTimeSeries));
+            A.CallTo(() => databaseService.TickerExistsAsync(A<string>._)).Returns(Task.FromResult(true));
+            A.CallTo(() => tickerService.GetTickerWeeklyAdjustedAsync(A<string>._)).Returns(Task.FromResult(fakeTickerTimeSeries));
             var controller = new TickerController(databaseService, tickerService);
 
             // Act
@@ -127,8 +127,8 @@ namespace Stocks.Server.Tests
             var databaseService = A.Fake<IDatabaseService>();
             var tickerService = A.Fake<ITickerService>();
 
-            A.CallTo(() => databaseService.TickerExistsAsync(tickername)).Returns(Task.FromResult(false));
-            A.CallTo(() => tickerService.GetTickerWeeklyAdjustedAsync(tickername)).Returns(Task.FromResult(fakeTickerTimeSeries));
+            A.CallTo(() => databaseService.TickerExistsAsync(A<string>._)).Returns(Task.FromResult(false));
+            A.CallTo(() => tickerService.GetTickerWeeklyAdjustedAsync(A<string>._)).Returns(Task.FromResult(fakeTickerTimeSeries));
             var controller = new TickerController(databaseService, tickerService);
 
             // Act
@@ -147,8 +147,8 @@ namespace Stocks.Server.Tests
             var databaseService = A.Fake<IDatabaseService>();
             var tickerService = A.Fake<ITickerService>();
 
-            A.CallTo(() => databaseService.TickerExistsAsync(tickername)).Returns(Task.FromResult(true));
-            A.CallTo(() => tickerService.GetTickerWeeklyAsync(tickername)).Returns(Task.FromResult(fakeTickerTimeSeries));
+            A.CallTo(() => databaseService.TickerExistsAsync(A<string>._)).Returns(Task.FromResult(true));
+            A.CallTo(() => tickerService.GetTickerWeeklyAsync(A<string>._)).Returns(Task.FromResult(fakeTickerTimeSeries));
             var controller = new TickerController(databaseService, tickerService);
 
             // Act
@@ -169,8 +169,8 @@ namespace Stocks.Server.Tests
             var databaseService = A.Fake<IDatabaseService>();
             var tickerService = A.Fake<ITickerService>();
 
-            A.CallTo(() => databaseService.TickerExistsAsync(tickername)).Returns(Task.FromResult(false));
-            A.CallTo(() => tickerService.GetTickerWeeklyAsync(tickername)).Returns(Task.FromResult(fakeTickerTimeSeries));
+            A.CallTo(() => databaseService.TickerExistsAsync(A<string>._)).Returns(Task.FromResult(false));
+            A.CallTo(() => tickerService.GetTickerWeeklyAsync(A<string>._)).Returns(Task.FromResult(fakeTickerTimeSeries));
             var controller = new TickerController(databaseService, tickerService);
 
             // Act
@@ -189,8 +189,8 @@ namespace Stocks.Server.Tests
             var databaseService = A.Fake<IDatabaseService>();
             var tickerService = A.Fake<ITickerService>();
 
-            A.CallTo(() => databaseService.TickerExistsAsync(tickername)).Returns(Task.FromResult(true));
-            A.CallTo(() => tickerService.GetTickerMonthlyAdjustedAsync(tickername)).Returns(Task.FromResult(fakeTickerTimeSeries));
+            A.CallTo(() => databaseService.TickerExistsAsync(A<string>._)).Returns(Task.FromResult(true));
+            A.CallTo(() => tickerService.GetTickerMonthlyAdjustedAsync(A<string>._)).Returns(Task.FromResult(fakeTickerTimeSeries));
             var controller = new TickerController(databaseService, tickerService);
 
             // Act
@@ -211,8 +211,8 @@ namespace Stocks.Server.Tests
             var databaseService = A.Fake<IDatabaseService>();
             var tickerService = A.Fake<ITickerService>();
 
-            A.CallTo(() => databaseService.TickerExistsAsync(tickername)).Returns(Task.FromResult(false));
-            A.CallTo(() => tickerService.GetTickerMonthlyAdjustedAsync(tickername)).Returns(Task.FromResult(fakeTickerTimeSeries));
+            A.CallTo(() => databaseService.TickerExistsAsync(A<string>._)).Returns(Task.FromResult(false));
+            A.CallTo(() => tickerService.GetTickerMonthlyAdjustedAsync(A<string>._)).Returns(Task.FromResult(fakeTickerTimeSeries));
             var controller = new TickerController(databaseService, tickerService);
 
             // Act
@@ -231,8 +231,8 @@ namespace Stocks.Server.Tests
             var databaseService = A.Fake<IDatabaseService>();
             var tickerService = A.Fake<ITickerService>();
 
-            A.CallTo(() => databaseService.TickerExistsAsync(tickername)).Returns(Task.FromResult(true));
-            A.CallTo(() => tickerService.GetTickerMonthlyAsync(tickername)).Returns(Task.FromResult(fakeTickerTimeSeries));
+            A.CallTo(() => databaseService.TickerExistsAsync(A<string>._)).Returns(Task.FromResult(true));
+            A.CallTo(() => tickerService.GetTickerMonthlyAsync(A<string>._)).Returns(Task.FromResult(fakeTickerTimeSeries));
             var controller = new TickerController(databaseService, tickerService);
 
             // Act
@@ -253,8 +253,8 @@ namespace Stocks.Server.Tests
             var databaseService = A.Fake<IDatabaseService>();
             var tickerService = A.Fake<ITickerService>();
 
-            A.CallTo(() => databaseService.TickerExistsAsync(tickername)).Returns(Task.FromResult(false));
-            A.CallTo(() => tickerService.GetTickerMonthlyAsync(tickername)).Returns(Task.FromResult(fakeTickerTimeSeries));
+            A.CallTo(() => databaseService.TickerExistsAsync(A<string>._)).Returns(Task.FromResult(false));
+            A.CallTo(() => tickerService.GetTickerMonthlyAsync(A<string>._)).Returns(Task.FromResult(fakeTickerTimeSeries));
             var controller = new TickerController(databaseService, tickerService);
 
             // Act
