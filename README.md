@@ -33,7 +33,7 @@ Simple web service that let's you browse tickers and their movement in price.
 
 <details>
   <summary>Ticker Page</summary>
-  See ticker OHLC and Volume.
+  See ticker OHLC and Volume charts.
   <img src="screenshots/sample_ticker.png">
 </details>
 
