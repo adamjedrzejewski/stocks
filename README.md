@@ -7,10 +7,35 @@
     <img src="https://img.shields.io/github/license/adamjedrzejewski/stocks?style=for-the-badge">
   </a>
 </p>
-Browse tickers and their movement in price.
 
 <!-- About -->
 ## About the project
+### Description
+Simple web service that let's you browse tickers and their movement in price.
+### Usage
+<details>
+  <summary>Login and Register</summary>
+  Create an account, login in to your account.
+  <img src="screenshots/login_register_page.png">
+</details>
+
+<details>
+  <summary>Browse Tickers</summary>
+  Browse a list of tickers, add tickers to your watchlist.
+  <img src="screenshots/browse_tickers.png">
+</details>
+
+<details>
+  <summary>User Watchlist</summary>
+  Browse your ticker watchlist, remove from watchlist.
+  <img src="screenshots/watchlist.png">
+</details>
+
+<details>
+  <summary>Ticker Page</summary>
+  See ticker OHLC and Volume.
+  <img src="screenshots/sample_ticker.png">
+</details>
 
 ## Getting started
 ### Prerequisites
