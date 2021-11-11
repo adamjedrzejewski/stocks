@@ -41,7 +41,7 @@ You will need:
 
 2. Alpha Vantage API key. Get one [_here_](https://www.alphavantage.co/support/#api-key).
 ```json
-"AlphaVantageApiKey": "{your api key}"
+"AlphaVantageServiceApiKey": "{your api key}"
 ```
 
 ### Running
